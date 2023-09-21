@@ -2,7 +2,7 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import About from "./container/About/About";
 import Appointement from "./container/Appointement/Appointement";
-import Auth from "./container/Appointement/Auth/Auth";
+import Auth from "./container/Auth/Auth";
 import Contact from "./container/Contact/Contact";
 import Department from "./container/Department/Department";
 import Doctor from "./container/Doctor/Doctor";
