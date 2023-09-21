@@ -273,6 +273,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar a:hover, .navbar .active, .navbar li:hover > a {
   color: #FF6337;
   border-color: #FF6337;
+  /* text-decoration: underline; */
 }
 
 .navbar .dropdown ul {
@@ -1751,4 +1752,10 @@ section {
 
 .main-header {
   height: 138px;
+}
+
+/* Login / Signup Module */
+
+.login{
+  text-decoration: underline;
 }
