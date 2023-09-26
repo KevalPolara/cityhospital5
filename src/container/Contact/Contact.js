@@ -1,4 +1,6 @@
 import React from 'react';
+import { Heading, Headings, SubHeadingone } from '../../components/UI/Heading/Heading';
+import { Text } from '../../components/UI/Text/Text';
 
 function Contact(props) {
     return (
@@ -6,7 +8,7 @@ function Contact(props) {
   <section id="contact" className="contact">
     <div className="container">
       <div className="section-title">
-        <h2>Contact</h2>
+        <Heading>Contact</Heading>
         <p>Aenean enim orci, suscipit vitae sodales ac, semper in ex. Nunc aliquam eget nibh eu euismod. Donec dapibus
           blandit quam volutpat sollicitudin. Aenean ac turpis ante. Mauris velit sapien, aliquet aliquet rhoncus quis,
           luctus at neque. Mauris sit amet massa sed orci vehicula facilisis.</p>
@@ -18,18 +20,18 @@ function Contact(props) {
           <div className="info">
             <div className="address">
               <i className="bi bi-geo-alt" />
-              <h4>Location:</h4>
-              <p> F-505, Inovative Plazza New Delhi, India</p>
+              <Headings>Location:</Headings>
+              <SubHeadingone> F-505, Inovative Plazza New Delhi, India</SubHeadingone>
             </div>
             <div className="email">
               <i className="bi bi-envelope" />
-              <h4>Email:</h4>
-              <p>cityhospital@example.com</p>
+              <Headings>Email:</Headings>
+              <SubHeadingone>cityhospital@example.com</SubHeadingone>
             </div>
             <div className="phone">
               <i className="bi bi-phone" />
-              <h4>Call:</h4>
-              <p>+91 9988776655</p>
+              <Headings>Call:</Headings>
+              <SubHeadingone>+91 9988776655</SubHeadingone>
             </div>
           </div>
         </div>

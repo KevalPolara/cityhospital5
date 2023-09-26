@@ -1,4 +1,6 @@
 import React from 'react';
+import { H4, Heading, SubHeading } from '../../components/UI/Heading/Heading';
+import { Text } from '../../components/UI/Text/Text';
 
 function Doctor(props) {
     return (
@@ -6,7 +8,7 @@ function Doctor(props) {
   <section id="doctors" className="doctors">
     <div className="container">
       <div className="section-title">
-        <h2>Doctors</h2>
+        <Heading>Doctors</Heading>
         <p>Duis sagittis rutrum neque, quis tincidunt arcu pretium ac. Suspendisse sem risus, molestie vitae arcu et,
           tincidunt viverra erat. Quisque in lectus id nulla viverra sodales in a risus. Aliquam ut sem ex. Duis viverra
           ipsum lacus, ut pharetra arcu sagittis nec. Phasellus a eleifend elit.</p>
@@ -16,8 +18,8 @@ function Doctor(props) {
           <div className="member d-flex align-items-start">
             <div className="pic"><img src="../assets/img/doctors/doctors-1.jpg" className="img-doctor" alt /></div>
             <div className="member-info">
-              <h4>Atha Smith</h4>
-              <span>Chief Medical Officer</span>
+              <H4>Atha Smith</H4>
+              <SubHeading>Chief Medical Officer</SubHeading>
               <p>Duis sagittis rutrum neque, quis tincidunt arcu pretium ac.</p>
               <div className="social">
                 <a href><i className="ri-twitter-fill" /></a>
@@ -32,8 +34,8 @@ function Doctor(props) {
           <div className="member d-flex align-items-start">
             <div className="pic"><img src="../assets/img/doctors/doctors-2.jpg" className="img-doctor" alt /></div>
             <div className="member-info">
-              <h4>John White</h4>
-              <span>Anesthesiologist</span>
+              <H4>John White</H4>
+              <SubHeading>Anesthesiologist</SubHeading>
               <p>Aenean ac turpis ante. Mauris velit sapien.</p>
               <div className="social">
                 <a href><i className="ri-twitter-fill" /></a>
@@ -48,8 +50,8 @@ function Doctor(props) {
           <div className="member d-flex align-items-start">
             <div className="pic"><img src="../assets/img/doctors/doctors-3.jpg" className="img-doctor" alt /></div>
             <div className="member-info">
-              <h4>Umika Loha</h4>
-              <span>Cardiology</span>
+              <H4>Umika Loha</H4>
+              <SubHeading>Cardiology</SubHeading>
               <p>Curabitur luctus eleifend odio. Phasellus placerat mi.</p>
               <div className="social">
                 <a href><i className="ri-twitter-fill" /></a>
@@ -64,8 +66,8 @@ function Doctor(props) {
           <div className="member d-flex align-items-start">
             <div className="pic"><img src="../assets/img/doctors/doctors-4.jpg" className="img-doctor" alt /></div>
             <div className="member-info">
-              <h4>Daimy Smith</h4>
-              <span>Neurosurgeon</span>
+              <H4>Daimy Smith</H4>
+              <SubHeading>Neurosurgeon</SubHeading>
               <p>Morbi vulputate, tortor nec pellentesque molestie, eros nisi ornare purus.</p>
               <div className="social">
                 <a href><i className="ri-twitter-fill" /></a>

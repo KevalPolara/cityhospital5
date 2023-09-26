@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import Button from "../../components/UI/Button/Button";
+import InputBox from "../../components/UI/InputBox/InputBox";
+import { Heading } from "../../components/UI/Heading/Heading";
 
 function Auth(props) {
     const [type,isType]=useState('login');
-    // const [istype,SetIsType]=useState('fpassword');
 
 
   return (
@@ -10,8 +12,8 @@ function Auth(props) {
       <div classname="container">
         <div className="section-title">
             {
-                type==='fpassword' ? <h2 className="text-center">Forgot Password</h2> : type=== 'login' ?<h2 className="text-center">Login</h2> :
-                <h2 className="text-center">SignUp</h2>
+                type==='fpassword' ? <Heading className="text-center">Forgot Password</Heading> : type=== 'login' ?<Heading className="text-center">Login</Heading> :
+                <Heading className="text-center">SignUp</Heading>
             }
 
         </div>
@@ -20,26 +22,26 @@ function Auth(props) {
             {
                 type ==='fpassword' ? '' : type==='login' ? '':
                 <div className="col-md-8 form-group">
-                <input type="text" name="name" className="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                <InputBox type="text" name="name" className="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                 <div className="validate" />  
               </div>
             }
           
           <div className="col-md-8 form-group mt-3 mt-md-0">
-            <input type="email" className="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+            <InputBox type="email" className="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
             <div className="validate" />
           </div>
 
           {
               type==='fpassword' ? '': <div className="col-md-8 form-group mt-3 mt-md-0">
-              <input type="tel" className="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+              <InputBox type="tel" className="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
             </div>
             }
          
         </div>
         {
-          type==='fpassword' ?<div className="text-center mt-3"><button type="submit">Submit</button></div> : type==='login' ?
-          <div className="text-center mt-3"><button type="submit">Login</button></div> : <div className="text-center mt-3"><button type="submit">SignUp</button></div>
+          type==='fpassword' ?<div className="text-center mt-3"><Button type="submit" disabled={true}>Submit</Button></div> : type==='login' ?
+          <div className="text-center mt-3"><Button type="submit" btndisabled={true} btntype="secondary">Login</Button></div> : <div className="text-center mt-3"><Button type="submit" btntype="outline" disabled={true}>SignUp</Button></div>
         }
         
         </form>

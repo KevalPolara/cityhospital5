@@ -1,0 +1,33 @@
+.swiper-button-prev:after{
+    color: #2c4964;
+    padding-right: 2rem !important;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid blue;
+    padding: 1rem 0 1rem 1rem;
+    font-size: 25px;
+    background-color: #ff6337;
+    margin-left: 0rem;
+    margin-right: 6rem;
+    margin-top: 0rem;
+}
+
+.swiper-button-next:after{
+    color: #2c4964;
+    padding-right: 2rem !important;
+    height: 50px;
+    width: 50px;
+    border: 1px solid blue;
+    padding: 1rem 0 1rem 1rem;
+    font-size: 25px;
+    border-radius: 50%;
+    background-color: #ff6337;
+    margin-right: 6.7rem !important;
+    margin-top: 0rem !important;
+    margin-left: 13.0rem;
+}
+
+.swiper{
+    overflow: visible;  
+}

@@ -8,6 +8,10 @@ import Department from "./container/Department/Department";
 import Doctor from "./container/Doctor/Doctor";
 import Home from "./container/Home/Home";
 import { Routes, Route } from "react-router-dom";
+import Stylecomponent from "./container/Stylecomponent/Stylecomponent";
+import Card from "./container/Card/Card";
+import Product from "./container/Card/Product";
+
 
 function App() {
   return (
@@ -23,6 +27,8 @@ function App() {
         <Route path="/auth" element={<Auth/>}/>
       </Routes>
       <Footer />
+      {/* <Card/> */}
+      {/* <Product/> */}
     </div>
   );
 }
