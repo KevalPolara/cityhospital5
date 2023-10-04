@@ -14,4 +14,11 @@ export const BaseInputBox= styled.input
         border-color: #FF6337;
         box-shadow :none;
     }
+
 `
+export const InputEror=styled.span
+`
+color :red;
+
+`
+

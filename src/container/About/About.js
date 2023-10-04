@@ -1,8 +1,11 @@
 import React from 'react';
 import { H3A } from '../../components/UI/Heading/Heading';
 import { Text } from '../../components/UI/Text/Text';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function About(props) {
+  // const navigate=useNavigate();
+
     return (
         <main>
         <section id="about" class="about">
@@ -19,7 +22,7 @@ function About(props) {
             rutrum neque, quis tincidunt arcu pretium ac. Suspendisse sem </p>
         </div>
       </div>
-
+      {/* <button onClick={()=>navigate(-1)} type="submit">Go To Contact</button> */}
     </div>
   </section>
 

@@ -5,6 +5,8 @@ import Card from '../Card/Card';
 import 'swiper/css';
 import "./swiper.css"
 import { Heading } from '../../components/UI/Heading/Heading';
+import { NavLink} from 'react-router-dom';
+import ProductReview from './ProductReview';
 
 function Review(props) {
     const [data,SetData]=useState([]);
@@ -50,10 +52,17 @@ function Review(props) {
         data.map((v)=>{
           return(
             <div className='swiper'>
-            <SwiperSlide> <Card
-                      name={v.name}
-                      description={v.body}              
-            /></SwiperSlide> 
+              <ProductReview 
+               data={data}
+              />
+             
+            <SwiperSlide>
+              <NavLink to ={'/productreview/' + v.id} > 
+              <Card
+                  name={v.name}
+                  description={v.body}
+             /></NavLink>
+             </SwiperSlide> 
             </div>
           )
         })

@@ -84,6 +84,19 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.4s;
 }
 
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #FF6337;
+  outline: 0;
+}
+/* .error-handle{
+  color: red;
+} */
+.one{
+  margin-top: 1.0rem;
+}
+
 .back-to-top i {
   font-size: 28px;
   color: #fff;

@@ -28,7 +28,4 @@ const CustomButton=handleButton();
     );   
 }
 
-
-
-
 export default Button;

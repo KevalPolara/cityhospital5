@@ -1,10 +1,13 @@
 import React from 'react';
-import { BaseInputBox } from './InputBox.style';
+import { BaseInputBox, InputEror } from './InputBox.style';
 
-function InputBox({...rest}) {
+function InputBox({errortext,...rest}) {
     return (
         <>
           <BaseInputBox {...rest}/>
+          <InputEror>
+          {errortext}
+          </InputEror>
             
         </>
     );
