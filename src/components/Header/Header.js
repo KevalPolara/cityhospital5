@@ -1,8 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Header.css";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-function Header(props) {
+function Header({ counter, fav}) {
   return (
     <div className="main-header">
       <div id="topbar" className="d-flex align-items-center fixed-top">
@@ -74,6 +79,30 @@ function Header(props) {
                   Doctors
                 </NavLink>
               </li>
+
+              <li>
+              <NavLink
+                  to={"/dataform"}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "nav-link scrollto active" : "nav-link scrollto"}
+                  activeClassName="active"
+                  // href="./pages/doctors.html"
+                >
+                  Forms
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to={"/medicine"}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "nav-link scrollto active" : "nav-link scrollto"}
+                  activeClassName="active"
+                  href="./pages/contact.html"
+                >
+                  Medicine
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to={"/about"}
@@ -96,6 +125,7 @@ function Header(props) {
                   Contact
                 </NavLink>
               </li>
+
               {/* <li><NavLink to={"/appointement"} className="nav-link scrollto" activeClassName="active" href="./pages/contact.html"></NavLink></li> */}
             </ul>
             <i className="bi bi-list mobile-nav-toggle" />
@@ -111,6 +141,12 @@ function Header(props) {
           <NavLink to={"/auth"} className="appointment-btn scrollto">
             <span className="d-none d-md-inline">Login/ Signup</span>
           </NavLink>
+          <Badge badgeContent={counter} color="primary">
+            <AddShoppingCartIcon className="addicon" />
+          </Badge>
+          <Badge badgeContent={fav.length} color="primary">
+               <FavoriteBorderIcon className="addicon" />
+          </Badge>
         </div>
       </header>
     </div>

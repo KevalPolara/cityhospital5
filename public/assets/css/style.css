@@ -17,6 +17,22 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
 }
 
+.addicon{
+  font-size: 50px;
+  margin-left: 1.0rem;
+  color: orangered;
+}
+
+.favourite{
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
+
+.butt{
+  text-align: center;
+  margin-top: 2.0rem;
+}
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
@@ -90,9 +106,9 @@ h1, h2, h3, h4, h5, h6 {
   border-color: #FF6337;
   outline: 0;
 }
-/* .error-handle{
+.error{
   color: red;
-} */
+}
 .one{
   margin-top: 1.0rem;
 }
@@ -167,6 +183,11 @@ h1, h2, h3, h4, h5, h6 {
 
 #topbar .social-links a:first-child {
   border-left: 0;
+}
+
+.sort{
+  margin-left: 2.0rem;
+  padding: 0.1rem;
 }
 
 /*--------------------------------------------------------------

@@ -2,10 +2,9 @@ import { values } from "lodash-es";
 import * as yup from "yup";
 
 let date = new Date();
-console.log(date);
 
 let nd = new Date(date.setDate(date.getDate() - 1));
-console.log(nd);
+
 
 export const contactschema = yup.object().shape({
   name: yup
