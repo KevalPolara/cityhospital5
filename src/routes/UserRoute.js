@@ -18,6 +18,7 @@ import MedicineAllData from '../container/Medicine/MedicineAllData';
 import Form from '../container/Form/FormOne';
 import Appointment1 from '../container/Form/Appointment1';
 import Formone from '../container/Form/FormOne';
+import Counter from '../container/Counter/Counter';
 
 
 function UserRoute(props) {
@@ -34,6 +35,7 @@ function UserRoute(props) {
         <Route path="/dataform" element={<Formone/>} />
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/about" element={<About />} />
+        <Route path="/counter" element={<Counter />} />
         <Route path="/contact/" element={<Contact />}/>
         <Route element={<Privateroute/>}>
         <Route path="/appointement" element={<Appointement />} />

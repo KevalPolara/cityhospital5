@@ -70,6 +70,17 @@ function Header({ counter, fav}) {
               </li>
               <li>
                 <NavLink
+                  to={"/counter"}
+                  className={({ isActive, isPending }) =>
+                    isActive ? "nav-link scrollto active" : "nav-link scrollto"}
+                  activeClassName="active"
+                  href="./pages/departments.html"
+                >
+                  Counter
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to={"/doctor"}
                   className={({ isActive, isPending }) =>
                     isActive ? "nav-link scrollto active" : "nav-link scrollto"}
