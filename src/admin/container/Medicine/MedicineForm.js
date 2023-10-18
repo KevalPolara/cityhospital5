@@ -27,8 +27,8 @@ function MedicineForm({onhandleSubmit,onhandleUpdate}) {
   const initialValues = {
     name: "",
     price: "",
-    date: "",
-    description: ""
+    expiry: "",
+    desc: ""
   };
   
    const contactschema = yup.object().shape({
@@ -40,11 +40,11 @@ function MedicineForm({onhandleSubmit,onhandleUpdate}) {
         /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/,
         "Please Enter a Positive"
       ),
-    date: yup
+      expiry: yup
       .date()
       .min(nd, "Please Enter a valid Date")
       .required("Please Enter a Date"),
-    description: yup
+      desc: yup
       .string()
       .min(10)
       .max(100)
@@ -112,6 +112,7 @@ function MedicineForm({onhandleSubmit,onhandleUpdate}) {
                 {errors.name}
               </div>
             : null}
+
           <TextField
             margin="dense"
             id="name"
@@ -134,37 +135,37 @@ function MedicineForm({onhandleSubmit,onhandleUpdate}) {
           <TextField
             margin="dense"
             id="name"
-            name="description"
+            name="desc"
             label="Enter a Medicine Description"
             type="email"
             fullWidth
             variant="standard"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.description}
+            value={values.desc}
           />
-          {touched.description && errors.description
+          {touched.desc && errors.desc
             ? <div className="error">
-                {errors.description}
+                {errors.desc}
               </div>
             : null}
 
           <TextField
             margin="dense"
             id="name"
-            name="date"
+            name="expiry"
             label=""
             type="date"
             fullWidth
             variant="standard"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.date}
+            value={values.expiry}
           />
 
-          {touched.date && errors.date
+          {touched.expiry && errors.expiry
             ? <div className="error">
-                {errors.date}
+                {errors.expiry}
               </div>
             : null}
 

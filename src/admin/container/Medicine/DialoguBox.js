@@ -9,66 +9,64 @@ import EditIcon from "@mui/icons-material/Edit";
 import { constant, update } from "lodash-es";
 import MedicineData from "../../../container/Medicine/MedicineData";
 import MedicineForm from "./MedicineForm";
+import { useDispatch, useSelector } from "react-redux";
+import { addmedicineData, deletemedicineData, getmedicineData, updatemedicineData } from "../../../redux/action/medicine.action";
 
 export default function DialoguBox() {
 
   const [mdata, setMdata] = useState([]);
   const [editing, setEditing] = useState(false);
+  const dispatch=useDispatch()
+  const medidata= useSelector((state)=>state.medicines);
+  console.log(medidata.medicine);
+
 
   
   useEffect(() => {
-    let localdata = JSON.parse(localStorage.getItem("medicine"));
+    dispatch(getmedicineData())
+    // let localdata = JSON.parse(localStorage.getItem("medicine"));
 
-    if (localdata) {
-      setMdata(localdata);
-    }
+    // if (localdata) {
+    //   setMdata(localdata);
+    // }
+
+
   }, []);
 
 
   const handleFormSubmit=(data)=>{
-    let localdata = JSON.parse(localStorage.getItem("medicine"));
-    let id = Math.floor(Math.random() * 1000);
+    console.log(data);
 
 
-    if (localdata) {
-      if(editing){
-        let index = localdata.findIndex(v => v.id === data.id);
-        console.log(index);
-        localdata[index] = data;
-        console.log(localdata);
-        localStorage.setItem("medicine", JSON.stringify(localdata));
-        setMdata(localdata);
-        setEditing(false);
-      }else{  
-      localdata.push({ id, ...data });
-      localStorage.setItem("medicine", JSON.stringify(localdata));
-      setMdata(localdata);
-      }
+    if(editing){
+      dispatch(updatemedicineData(data))
+
+    }else{
+     dispatch(addmedicineData(data)); 
     }
-       else {
-        localStorage.setItem("medicine", JSON.stringify([{ id, ...data }]));
-        setMdata([{ id, ...data }]);
-    }
+
+    setEditing(false);
   }
 
 
   const handleDelete = id => {
-    let setItem = mdata.filter(v => v.id !== id);
+      dispatch(deletemedicineData(id));
+    // let setItem = mdata.filter(v => v.id !== id);
 
-    setMdata(setItem);
-    localStorage.setItem("medicine", JSON.stringify(setItem));
+    // setMdata(setItem);
+    // localStorage.setItem("medicine", JSON.stringify(setItem));
   };
 
 
   const handleEdit = data => {
-    setEditing(data);
+    setEditing(data)
   };
 
   const columns = [
     { field: "name", headerName: "Name", width: 70 },
     { field: "price", headerName: "Price", width: 130 },
-    { field: "date", headerName: "Date", width: 130 },
-    { field: "description", headerName: "Date", width: 130 },
+    { field: "expiry", headerName: "expiry", width: 130 },
+    { field: "desc", headerName: "desc", width: 130 },
     {
       field: "action",
       headerName: "Action",
@@ -88,7 +86,7 @@ export default function DialoguBox() {
     <div>
       <MedicineForm onhandleSubmit={handleFormSubmit} onhandleUpdate={editing}/>
       <DataGrid
-        rows={mdata}
+        rows={medidata.medicine}
         columns={columns}
         initialState={{
           pagination: {

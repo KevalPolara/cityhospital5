@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Medicine from '../admin/container/Medicine/Medicine';
 import Privateroute from './Privateroute';
 import Layout from '../component/Layout/Layout';
 import DialoguBox from '../admin/container/Medicine/DialoguBox';
