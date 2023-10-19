@@ -4,6 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import CardOne from "../Card/CardOne";
 import { Box, TextField } from "@mui/material";
 import { GridSearchIcon } from "@mui/x-data-grid";
+import { useEffect } from "react";
+import { getmedicineData } from "../../redux/action/medicine.action";
+import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function MedicineData({increment, fav,SetFav}) {
   let localdata = JSON.parse(localStorage.getItem("medicine"));
@@ -11,10 +16,18 @@ function MedicineData({increment, fav,SetFav}) {
 
   const [dataone, SetData] = useState(localdata);
   const [input, SetInput] = useState("");
+  console.log(input);
   const [sort, SetSort] = useState("");
   const [search, finalData] = useState([]);
   const { id } = useParams();
   const [favourite, SetFavourite] = useState(false);
+  const dispatch= useDispatch()
+  const medidata= useSelector((state)=>state.medicines);
+  console.log(medidata);
+
+  useEffect(()=>{
+    dispatch(getmedicineData())
+  },[])
 
   const handleAddCart = (event) => {
     event.preventDefault();
@@ -31,24 +44,20 @@ function MedicineData({increment, fav,SetFav}) {
     }else{
       SetFav((prev)=> [...prev,id]);
     }
-
-
   };
 
   console.log(fav);
 
 
   const handleSortSearch = () => {
-    let fdata = dataone.filter(v => {
-      // console.log(dataone);
+    let fdata = medidata.medicine.filter(v => {
       return (
         v.name.toLowerCase().includes(input.toLowerCase()) ||
-        v.description.toLowerCase().includes(input.toLowerCase()) ||
         v.price.toString().includes(input.toString())
       );
     });
 
-    fdata = fdata.sort((a, b) => {
+    fdata =  medidata.medicine.sort((a, b) => {
       if (sort === "az") {
         return a.name.localeCompare(b.name);
       } else if (sort === "za") {
@@ -97,26 +106,31 @@ function MedicineData({increment, fav,SetFav}) {
       </select>
 
       <div className="row">
-        {finaldata.map(v => {
+        {
+          medidata.isLoading ? <Box sx={{ display: 'flex' }} className='justify-content-center'>
+          <CircularProgress />
+        </Box>:
+        medidata.medicine.map(v => {
           
-          return (
-            <div className="col-md-4">
-              <Link to={"/medicinealldata/" + v.id}>
-                <CardOne
-                  name={v.name}
-                  price={v.price}
-                  description={v.description}
-                  isButton="Add to Cart"
-                  onHandleCart={handleAddCart}
-                  favButVal="btn"
-                  onHandleFav={(event)=>handleFavIncre(event,v.id)}
-                  favourite={fav.includes(v.id) ? true : false}
-
-                />
-              </Link>
-            </div>
-          );
-        })}
+            return (
+              <div className="col-md-4">
+                <Link to={"/medicinealldata/" + v.id}>
+                  <CardOne
+                    name={v.name}
+                    price={v.price}
+                    description={v.description}
+                    isButton="Add to Cart"
+                    onHandleCart={handleAddCart}
+                    favButVal="btn"
+                    onHandleFav={(event)=>handleFavIncre(event,v.id)}
+                    favourite={fav.includes(v.id) ? true : false}
+                  />
+                </Link>
+              </div>
+            );
+          })
+        }
+        
       </div>
     </div>
   );

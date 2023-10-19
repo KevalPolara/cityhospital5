@@ -18,19 +18,9 @@ export default function DialoguBox() {
   const [editing, setEditing] = useState(false);
   const dispatch=useDispatch()
   const medidata= useSelector((state)=>state.medicines);
-  console.log(medidata.medicine);
 
-
-  
   useEffect(() => {
     dispatch(getmedicineData())
-    // let localdata = JSON.parse(localStorage.getItem("medicine"));
-
-    // if (localdata) {
-    //   setMdata(localdata);
-    // }
-
-
   }, []);
 
 
@@ -50,11 +40,7 @@ export default function DialoguBox() {
 
 
   const handleDelete = id => {
-      dispatch(deletemedicineData(id));
-    // let setItem = mdata.filter(v => v.id !== id);
-
-    // setMdata(setItem);
-    // localStorage.setItem("medicine", JSON.stringify(setItem));
+    dispatch(deletemedicineData(id));
   };
 
 

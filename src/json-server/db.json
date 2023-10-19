@@ -48,6 +48,21 @@
       "expiry": "2023-11-10",
       "desc": "This Medicine is a Headache Releted",
       "id": 10
+    },
+    {
+      "name": "Dolloone",
+      "price": 101,
+      "expiry": "2023-11-06",
+      "desc": "This is a Proper",
+      "id": 11
+    }
+  ],
+  "department": [
+    {
+      "id": "1",
+      "name": "abc",
+      "sdescription": "This is a sdescription",
+      "ldescription": "This is a ldescription"
     }
   ]
 }

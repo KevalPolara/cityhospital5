@@ -37,7 +37,7 @@ function CardOne({
               {name}
             </CardTitle>
             <CardSubTitle>
-              {description}
+              {description.substring('20')}
             </CardSubTitle>
             <Price>
               ₹{price}

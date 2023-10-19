@@ -22,6 +22,7 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { Link } from 'react-router-dom';
 import Doctor from '../../admin/container/Doctor/Doctor';
 import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 const drawerWidth = 240;
 
@@ -101,6 +102,12 @@ const iconitem=[
       label:'Doctor',
       icon:<MedicationLiquidIcon/>,
       to:'/admin/doctor'
+  },
+  {
+      
+    label : 'Department',
+    icon  : <LocalFireDepartmentIcon/>,
+    to : '/admin/department'
   }
 ]
 

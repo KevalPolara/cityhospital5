@@ -1,20 +1,24 @@
 import { API_URL } from "../../utiles/baseUrl";
-import { ADD_MEDICINE, DELETE_MEDICINE, GET_MEDICINE, UPDATE_MEDICINE } from "../ActionTypes";
+import { ADD_MEDICINE, DELETE_MEDICINE, GET_MEDICINE, LOADING_MEDICINE, UPDATE_MEDICINE } from "../ActionTypes";
 
 
 export const getmedicineData=()=>(dispatch)=>{
     try{
-    fetch(API_URL + 'medicines')
-    .then((response)=>response.json())
-    .then((data)=>dispatch({type:GET_MEDICINE,payload :data}))
+       dispatch( loadingMedicine())
 
-    }catch(errror){
+        return setTimeout(function(){
+            fetch(API_URL + 'medicines')
+            .then((response)=>response.json())
+            .then((data)=>dispatch({type:GET_MEDICINE,payload :data}))
+
+        },4000)
+    }
+
+    catch(errror){
         console.log(errror);
     }
 
 }
-
-
 
 export const addmedicineData=(data)=>(dispatch)=>{
     try{
@@ -37,13 +41,11 @@ export const addmedicineData=(data)=>(dispatch)=>{
 }
 
 export const updatemedicineData=(data)=>(dispatch)=>{
-    console.log(data);
     try{
         fetch(API_URL + 'medicines/'+ data.id,{
           method : 'PUT',
           headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify(data)  
         })
@@ -70,4 +72,8 @@ export const deletemedicineData=(id)=>(dispatch)=>{
         console.log(error);
     }
 
+}
+
+export const loadingMedicine=()=>(dispatch)=>{
+    dispatch({type:LOADING_MEDICINE})
 }

@@ -1,4 +1,4 @@
-import { ADD_MEDICINE, DELETE_MEDICINE, GET_MEDICINE, UPDATE_MEDICINE } from "../ActionTypes";
+import { ADD_MEDICINE, DELETE_MEDICINE, GET_MEDICINE, LOADING_MEDICINE, UPDATE_MEDICINE } from "../ActionTypes";
 
 const initialState={
     isLoading : false,
@@ -8,14 +8,24 @@ const initialState={
 }
 
 export const medicineDatareducer=(state=initialState,action)=>{
-    console.log(action);
-    
+    console.log(action);    
 
     switch(action.type){
+
+        case LOADING_MEDICINE:
+            return{
+                isLoading : true,
+                medicine : [],
+                 errors : null
+            }
+            
+
+
         case GET_MEDICINE :
             return {
-                ...state,
-                medicine :action.payload
+                isLoading:false,
+                medicine :action.payload,
+                errors : null
             }
 
         case ADD_MEDICINE :
