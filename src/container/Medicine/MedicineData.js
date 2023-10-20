@@ -7,10 +7,10 @@ import { GridSearchIcon } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { getmedicineData } from "../../redux/action/medicine.action";
 import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
+import { addToCart } from "../../redux/action/cart.action";
 
-
-function MedicineData({increment, fav,SetFav}) {
+function MedicineData({ increment, fav, SetFav }) {
   let localdata = JSON.parse(localStorage.getItem("medicine"));
   console.log(localdata);
 
@@ -21,43 +21,46 @@ function MedicineData({increment, fav,SetFav}) {
   const [search, finalData] = useState([]);
   const { id } = useParams();
   const [favourite, SetFavourite] = useState(false);
-  const dispatch= useDispatch()
-  const medidata= useSelector((state)=>state.medicines);
+  const dispatch = useDispatch();
+  const medidata = useSelector(state => state.medicines);
   console.log(medidata);
 
-  useEffect(()=>{
-    dispatch(getmedicineData())
-  },[])
+  const cart= useSelector(state => state.cart);
+  console.log(cart);
 
-  const handleAddCart = (event) => {
+  useEffect(() => {
+    dispatch(getmedicineData());
+  }, []);
+
+  const handleAddCart = (event,id) => {
     event.preventDefault();
-    increment(prev => prev + 1);
+    dispatch(addToCart(id));
+    // increment(prev => prev + 1);
   };
 
-
-  const handleFavIncre = (event,id) => {
+  const handleFavIncre = (event, id) => {
     event.preventDefault();
 
-    if(fav.includes(id)){
-      let ans=fav.filter((v)=>v!== id)
+    if (fav.includes(id)) {
+      let ans = fav.filter(v => v !== id);
       SetFav(ans);
-    }else{
-      SetFav((prev)=> [...prev,id]);
+    } else {
+      SetFav(prev => [...prev, id]);
     }
   };
 
-  console.log(fav);
-
-
   const handleSortSearch = () => {
     let fdata = medidata.medicine.filter(v => {
+     
       return (
         v.name.toLowerCase().includes(input.toLowerCase()) ||
         v.price.toString().includes(input.toString())
       );
     });
 
-    fdata =  medidata.medicine.sort((a, b) => {
+    console.log(fdata);
+
+    fdata = medidata.medicine.sort((a, b) => {
       if (sort === "az") {
         return a.name.localeCompare(b.name);
       } else if (sort === "za") {
@@ -76,62 +79,76 @@ function MedicineData({increment, fav,SetFav}) {
 
   return (
     <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-xl-6 col-lg-8 col-md-10 col-12">
-          <Box sx={{ width: "100%", display: "flex", alignItems: "flex-end" }}>
-            <GridSearchIcon />
-            <TextField
-              type="search" // crossicon..
-              fullWidth
-              id="input-with-sx"
-              onChange={e => SetInput(e.target.value)}
-              label="Search medicine..."
-              variant="standard"
-            />
-          </Box>
-        </div>
-      </div>
-      {/* <input
-        type="search"
-        placeholder="Search Here"
-        onChange={e => SetInput(e.target.value)}
-      /> */}
-
-      <select className="sort" onChange={e => SetSort(e.target.value)}>
-        <option value="0">--Select</option>
-        <option value="lh">Low to High</option>
-        <option value="hl">High to Low</option>
-        <option value="az">A to Z</option>
-        <option value="za">Z to A</option>
-      </select>
-
-      <div className="row">
-        {
-          medidata.isLoading ? <Box sx={{ display: 'flex' }} className='justify-content-center'>
-          <CircularProgress />
-        </Box>:
-        medidata.medicine.map(v => {
-          
-            return (
-              <div className="col-md-4">
-                <Link to={"/medicinealldata/" + v.id}>
-                  <CardOne
-                    name={v.name}
-                    price={v.price}
-                    description={v.description}
-                    isButton="Add to Cart"
-                    onHandleCart={handleAddCart}
-                    favButVal="btn"
-                    onHandleFav={(event)=>handleFavIncre(event,v.id)}
-                    favourite={fav.includes(v.id) ? true : false}
-                  />
-                </Link>
-              </div>
-            );
-          })
-        }
+    <div className="row">
+      {
+        medidata.errors ? null :
+        <>
+       
         
-      </div>
+        <Box
+          sx={{
+            width: "50%",
+            display: "flex",
+            
+            alignItems: "flex-end"
+          }}
+        >
+          <GridSearchIcon />
+          <TextField
+            type="search" // crossicon..
+            fullWidth
+            id="input-with-sx"
+            onChange={e => SetInput(e.target.value)}
+            label="Search medicine..."
+            variant="standard"
+          />
+        </Box>
+
+
+        <select
+          className="sort"
+
+          onChange={e => SetSort(e.target.value)}
+        >
+          <option value="0">--Select</option>
+          <option value="lh">Low to High</option>
+          <option value="hl">High to Low</option>
+          <option value="az">A to Z</option>
+          <option value="za">Z to A</option>
+        </select>
+
+        </>
+      }
+      
+                 
+
+                  
+      {medidata.errors
+        ? <img src="../assets/img/Erorr-404.avif" className="error" />
+        : medidata.isLoading
+          ? <Box sx={{ display: "flex" }} className="justify-content-center">
+              <CircularProgress />
+            </Box>
+          : medidata.medicine.map(v => {
+              return (
+                <div className="col-md-4 mt-5">
+                  <Link to={"/medicinealldata/" + v.id}>
+                    <CardOne
+                      name={v.name}
+                      price={v.price}
+                      description={v.description}
+                      
+                      isButton="Add to Cart"
+                      onHandleCart={event=> handleAddCart(event,v.id)}
+                      favButVal="btn"
+                      onHandleFav={event => handleFavIncre(event, v.id)}
+                      favourite={fav.includes(v.id) ? true : false}
+                    />
+                  </Link>
+                </div>
+              );
+            })}
+    </div>
     </div>
   );
 }
