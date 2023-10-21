@@ -35,7 +35,7 @@ function MedicineData({ increment, fav, SetFav }) {
   const handleAddCart = (event,id) => {
     event.preventDefault();
     dispatch(addToCart(id));
-    // increment(prev => prev + 1);
+    increment(prev => prev + 1);
   };
 
   const handleFavIncre = (event, id) => {
@@ -58,7 +58,6 @@ function MedicineData({ increment, fav, SetFav }) {
       );
     });
 
-    console.log(fdata);
 
     fdata = medidata.medicine.sort((a, b) => {
       if (sort === "az") {
@@ -104,7 +103,7 @@ function MedicineData({ increment, fav, SetFav }) {
           />
         </Box>
 
-
+          
         <select
           className="sort"
 
@@ -119,10 +118,7 @@ function MedicineData({ increment, fav, SetFav }) {
 
         </>
       }
-      
-                 
-
-                  
+          
       {medidata.errors
         ? <img src="../assets/img/Erorr-404.avif" className="error" />
         : medidata.isLoading

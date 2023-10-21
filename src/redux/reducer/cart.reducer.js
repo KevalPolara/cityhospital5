@@ -1,14 +1,18 @@
-import { ADD_TO_CART } from "../ActionTypes";
+import { ADD_TO_CART, DECREMENT_CART, INCREMENT_CART } from "../ActionTypes";
 
 const initialState = {
   isLoading: false,
   cart: [],
-  error: null
+  error: null,
+  index:null
 };
 
 export const cartReducer = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
+    
+    
+
     case ADD_TO_CART:
       let check = state.cart.some(v => v.id === action.payload.id);
       console.log(check);
@@ -27,6 +31,30 @@ export const cartReducer = (state = initialState, action) => {
         cart: state.cart,
         error: null
       };
+
+      case INCREMENT_CART:
+        let index1=state.cart.findIndex(v=>v.id===action.payload);
+        state.cart[index1].qty++;
+
+        return{
+          isLoading: false,
+          cart: state.cart,
+          error: null
+        }
+
+        case DECREMENT_CART:
+          let index2=state.cart.findIndex(v=>v.id===action.payload);
+
+          if( state.cart[index2].qty > 1){
+          state.cart[index2].qty--;
+          }
+  
+          return{
+            isLoading: false,
+            cart: state.cart,
+            error: null
+          }
+
 
     default:
       return state;

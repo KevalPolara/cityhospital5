@@ -6,8 +6,18 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useSelector } from "react-redux";
 
 function Header({ counter, fav}) {
+  
+  const cartone= useSelector(state => state.cart);  
+
+  let qty=0;
+  {cartone.cart.map((v,i)=>
+    qty= qty +v.qty
+  )} 
+  console.log(qty);
+   
   return (
     <div className="main-header">
       <div id="topbar" className="d-flex align-items-center fixed-top">
@@ -69,7 +79,7 @@ function Header({ counter, fav}) {
                 </NavLink>
               </li>
               <li>
-                <NavLink
+                {/* <NavLink
                   to={"/counter"}
                   className={({ isActive, isPending }) =>
                     isActive ? "nav-link scrollto active" : "nav-link scrollto"}
@@ -77,7 +87,7 @@ function Header({ counter, fav}) {
                   href="./pages/departments.html"
                 >
                   Counter
-                </NavLink>
+                </NavLink> */}
               </li>
               <li>
                 <NavLink
@@ -152,9 +162,11 @@ function Header({ counter, fav}) {
           <NavLink to={"/auth"} className="appointment-btn scrollto">
             <span className="d-none d-md-inline">Login/ Signup</span>
           </NavLink>
-          <Badge badgeContent={counter} color="primary">
+          <NavLink to={"/cart"}>
+          <Badge badgeContent={qty}color="primary">
             <AddShoppingCartIcon className="addicon" />
           </Badge>
+          </NavLink>
           <Badge badgeContent={fav.length} color="primary">
                <FavoriteBorderIcon className="addicon" />
           </Badge>

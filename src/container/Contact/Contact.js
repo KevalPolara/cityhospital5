@@ -39,6 +39,9 @@ function Contact(props) {
    return (
 
     <main>
+      <br></br>
+      <br></br>
+      <br></br>
       <section id="contact" className="contact">
         <div className="container">
           <div className="section-title">

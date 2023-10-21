@@ -5,6 +5,8 @@ import { Text } from '../../components/UI/Text/Text';
 function Doctor(props) {
     return (
        <main>
+        <br></br>
+        <br></br>
   <section id="doctors" className="doctors">
     <div className="container">
       <div className="section-title">

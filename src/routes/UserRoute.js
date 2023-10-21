@@ -19,6 +19,7 @@ import Form from '../container/Form/FormOne';
 import Appointment1 from '../container/Form/Appointment1';
 import Formone from '../container/Form/FormOne';
 import Counter from '../container/Counter/Counter';
+import Cart from '../container/Cart/Cart';
 
 
 function UserRoute(props) {
@@ -35,16 +36,19 @@ function UserRoute(props) {
         <Route path="/dataform" element={<Formone/>} />
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/about" element={<About />} />
-        <Route path="/counter" element={<Counter />} />
+        {/* <Route path="/counter" element={<Counter />} /> */}
         <Route path="/contact/" element={<Contact />}/>
         <Route element={<Privateroute/>}>
         <Route path="/appointement" element={<Appointement />} />
         <Route path="/dept/:id" element={<Dept/>}/>
         </Route>
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth" element={<Auth />} />        
+        <Route path="/cart" element={<Cart />} />        
+
         <Route path="/productreview/:id" element={<ProductReview/>} />
         <Route path="/medicine" element={<MedicineData increment={SetCounter} fav={fav} SetFav={SetFav}/>} />
         <Route path="/medicinealldata/:id" element={<MedicineAllData/> } />
+
         {/* <Route path='*' element={<Error/>}/> */}
         {/* <Route path="/*" element={<Error/>} /> */}
       </Routes>
