@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DECREMENT_CART, INCREMENT_CART } from "../ActionTypes"
+import { ADD_TO_CART, DECREMENT_CART, DELETE_CART, INCREMENT_CART } from "../ActionTypes"
 
 export const addToCart=(id)=>(dispatch)=>{
     
@@ -16,6 +16,13 @@ export const incrementCart=(id)=>(dispatch)=>{
 export const decrementCart=(id)=>(dispatch)=>{
     dispatch({
         type:DECREMENT_CART,
+        payload:id
+    })
+}
+
+export const deleteCart=(id)=>(dispatch)=>{
+    dispatch({
+        type:DELETE_CART,
         payload:id
     })
 }

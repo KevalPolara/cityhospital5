@@ -9,8 +9,9 @@ import { getmedicineData } from "../../redux/action/medicine.action";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addToCart } from "../../redux/action/cart.action";
+import { addWishlist, colurWishlist } from "../../redux/action/wishlist.action";
 
-function MedicineData({ increment, fav, SetFav }) {
+function MedicineData({ increment,  SetFav }) {
   let localdata = JSON.parse(localStorage.getItem("medicine"));
   console.log(localdata);
 
@@ -26,7 +27,8 @@ function MedicineData({ increment, fav, SetFav }) {
   console.log(medidata);
 
   const cart= useSelector(state => state.cart);
-  console.log(cart);
+  const fav=useSelector(state=>state.fav);
+  console.log(cart,fav);
 
   useEffect(() => {
     dispatch(getmedicineData());
@@ -35,19 +37,15 @@ function MedicineData({ increment, fav, SetFav }) {
   const handleAddCart = (event,id) => {
     event.preventDefault();
     dispatch(addToCart(id));
-    increment(prev => prev + 1);
+    // increment(prev => prev + 1);
   };
 
   const handleFavIncre = (event, id) => {
     event.preventDefault();
+    dispatch(addWishlist(id))
 
-    if (fav.includes(id)) {
-      let ans = fav.filter(v => v !== id);
-      SetFav(ans);
-    } else {
-      SetFav(prev => [...prev, id]);
-    }
   };
+
 
   const handleSortSearch = () => {
     let fdata = medidata.medicine.filter(v => {
@@ -81,9 +79,7 @@ function MedicineData({ increment, fav, SetFav }) {
     <div className="row">
       {
         medidata.errors ? null :
-        <>
-       
-        
+        <>   
         <Box
           sx={{
             width: "50%",
@@ -138,7 +134,7 @@ function MedicineData({ increment, fav, SetFav }) {
                       onHandleCart={event=> handleAddCart(event,v.id)}
                       favButVal="btn"
                       onHandleFav={event => handleFavIncre(event, v.id)}
-                      favourite={fav.includes(v.id) ? true : false}
+                      favourite={fav.fav.includes(v.id) ? true : false}
                     />
                   </Link>
                 </div>

@@ -20,6 +20,7 @@ import Appointment1 from '../container/Form/Appointment1';
 import Formone from '../container/Form/FormOne';
 import Counter from '../container/Counter/Counter';
 import Cart from '../container/Cart/Cart';
+import Wishlist from '../container/Wishlist/Wishlist';
 
 
 function UserRoute(props) {
@@ -44,6 +45,7 @@ function UserRoute(props) {
         </Route>
         <Route path="/auth" element={<Auth />} />        
         <Route path="/cart" element={<Cart />} />        
+        <Route path="/wishlist" element={<Wishlist/>} />        
 
         <Route path="/productreview/:id" element={<ProductReview/>} />
         <Route path="/medicine" element={<MedicineData increment={SetCounter} fav={fav} SetFav={SetFav}/>} />

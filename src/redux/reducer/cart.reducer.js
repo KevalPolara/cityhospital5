@@ -1,18 +1,15 @@
-import { ADD_TO_CART, DECREMENT_CART, INCREMENT_CART } from "../ActionTypes";
+import { ADD_TO_CART, DECREMENT_CART, DELETE_CART, INCREMENT_CART } from "../ActionTypes";
 
 const initialState = {
   isLoading: false,
   cart: [],
   error: null,
-  index:null
 };
 
 export const cartReducer = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
     
-    
-
     case ADD_TO_CART:
       let check = state.cart.some(v => v.id === action.payload.id);
       console.log(check);
@@ -53,6 +50,12 @@ export const cartReducer = (state = initialState, action) => {
             isLoading: false,
             cart: state.cart,
             error: null
+          }
+
+        case DELETE_CART:
+          return {
+           ...state,
+            cart:state.cart.filter((v)=>v.id!==action.payload)
           }
 
 

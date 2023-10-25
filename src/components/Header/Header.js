@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 function Header({ counter, fav}) {
   
   const cartone= useSelector(state => state.cart);  
+  const favone=useSelector(state=>state.fav);
 
   let qty=0;
   {cartone.cart.map((v,i)=>
@@ -163,13 +164,15 @@ function Header({ counter, fav}) {
             <span className="d-none d-md-inline">Login/ Signup</span>
           </NavLink>
           <NavLink to={"/cart"}>
-          <Badge badgeContent={qty}color="primary">
+          <Badge badgeContent={qty} color="primary">
             <AddShoppingCartIcon className="addicon" />
           </Badge>
           </NavLink>
-          <Badge badgeContent={fav.length} color="primary">
+          <NavLink to={"/wishlist"}>
+          <Badge badgeContent={favone.fav.length} color="primary">
                <FavoriteBorderIcon className="addicon" />
           </Badge>
+          </NavLink>
         </div>
       </header>
     </div>

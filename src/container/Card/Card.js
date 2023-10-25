@@ -16,7 +16,7 @@ function Card({ name='',img='',price='',id,description='' }) {
                     {description}
                   </CardSubTitle>
                   <Price>
-                    ₹{price}
+                    {price}
                   </Price>
                 </CardBody>
               </div>
