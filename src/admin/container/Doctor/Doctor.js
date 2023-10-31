@@ -1,74 +1,50 @@
-import * as React from 'react';
+import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect } from 'react';
-import DoctorFormDialogue from './DoctorFormDialogue';
+import { useEffect } from "react";
+import DoctorFormDialogue from "./DoctorFormDialogue";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addDoctorData,
+  deleteDoctor,
+  getDoctorData,
+  putDoctorData
+} from "../../../redux/action/doctor.action";
+import { addmedicineData } from "../../../redux/action/medicine.action";
+import { deleteDoctorData } from "../../../common/api/doctor.api";
 
-
-  
 export default function Doctor() {
   const [mdata, setMdata] = useState([]);
   const [editing, setEditing] = useState(false);
+  const doctor = useSelector(state => state.doctor);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let localdata = JSON.parse(localStorage.getItem("doctor"));
-
-    if (localdata) {
-      setMdata(localdata);
-    }
+    dispatch(getDoctorData());
   }, []);
-
-  const handleAdd = data => {
-   
-  };
 
   const handleUpdate = dataone => {
     console.log(dataone);
-    // console.log('kkkk');
-   
   };
 
   const handleDelete = id => {
-    let setItem = mdata.filter(v => v.id !== id);
-
-    setMdata(setItem);
-    localStorage.setItem("doctor", JSON.stringify(setItem));
+    dispatch(deleteDoctor(id));
   };
 
   const handleEdit = data => {
     setEditing(data);
   };
 
-  const handleFormSubmit=(data)=>{
-
-    let localdata = JSON.parse(localStorage.getItem("doctor"));
-    let id = Math.floor(Math.random() * 1000);
-
-    if (localdata) {
-      if(editing){
-        let localdata = JSON.parse(localStorage.getItem("doctor"));
-        let index = localdata.findIndex(v => v.id === data.id);
-        console.log(index);
-        localdata[index] = data;
-        console.log(localdata);
-        localStorage.setItem("doctor", JSON.stringify(localdata));
-        setMdata(localdata);
-        setEditing(false);
-      }else{
-        
-      localdata.push({ id, ...data });
-      localStorage.setItem("doctor", JSON.stringify(localdata));
-      setMdata(localdata);
-      }
+  const handleFormSubmit = data => {
+    if (editing) {
+      dispatch(putDoctorData(data));
     } else {
-      localStorage.setItem("doctor", JSON.stringify([{ id, ...data }]));
-      setMdata([{ id, ...data }]);
+      dispatch(addDoctorData(data));
     }
-  }
+  };
 
-  
   const columns = [
     { field: "name", headerName: "Name", width: 70 },
     { field: "description", headerName: "Description", width: 130 },
@@ -91,9 +67,12 @@ export default function Doctor() {
 
   return (
     <div>
-      <DoctorFormDialogue onhandleSubmit={handleFormSubmit} onhandleUpdate={editing}/>
+      <DoctorFormDialogue
+        onhandleSubmit={handleFormSubmit}
+        onhandleUpdate={editing}
+      />
       <DataGrid
-        rows={mdata}
+        rows={doctor.doctor}
         columns={columns}
         initialState={{
           pagination: {

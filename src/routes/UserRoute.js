@@ -37,7 +37,7 @@ function UserRoute(props) {
         <Route path="/dataform" element={<Formone/>} />
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/counter" element={<Counter />} /> */}
+        <Route path="/counter" element={<Counter />} />
         <Route path="/contact/" element={<Contact />}/>
         <Route element={<Privateroute/>}>
         <Route path="/appointement" element={<Appointement />} />

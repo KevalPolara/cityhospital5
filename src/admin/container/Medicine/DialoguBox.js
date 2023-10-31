@@ -33,19 +33,13 @@ export default function DialoguBox() {
     }else{
       if(medidata.errors){
         <p>{medidata.errors}</p>
-          // <img src="../assets/img/Erorr-404.avif" className="error"/>
         }else{
           dispatch(addmedicineData(data));
         }
       }  
-
       setEditing(false);
     }
-
-    
  
-
-
   const handleDelete = id => {
     dispatch(deletemedicineData(id));
   };

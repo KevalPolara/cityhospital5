@@ -1,4 +1,9 @@
-import { API_URL } from "../../utiles/baseUrl";
+import {
+  editMedicineData,
+  getMedicineData,
+  postmedicineData,
+  removeMedicineData
+} from "../../common/api/medicine.api";
 import {
   ADD_MEDICINE,
   DELETE_MEDICINE,
@@ -9,71 +14,45 @@ import {
 } from "../ActionTypes";
 
 export const getmedicineData = () => dispatch => {
-    
   try {
     dispatch(loadingMedicine());
     return setTimeout(function() {
-      fetch(API_URL + "medicines")
-        .then(response =>{
-          console.log(response);
-          if(!response.ok){
-            throw ('Something Went Wrong')
-          }else{
-            return response.json()
-          }
-        })  
-        .then(data => dispatch({type: GET_MEDICINE, payload: data}))
-        .catch((errors)=> dispatch(errorMedicine(errors)))
+      getMedicineData()
+        .then(response =>
+          dispatch({ type: GET_MEDICINE, payload: response.data })
+        )
+        .catch(errors => dispatch(errorMedicine(errors)));
     }, 4000);
   } catch (errors) {
-    dispatch(errorMedicine(errors))
+    dispatch(errorMedicine(errors));
   }
 };
 
 export const addmedicineData = data => dispatch => {
   try {
-    fetch(API_URL + "medicine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response =>{
-        if(!response.ok){
-          throw new Error('Something Went Wrong');
-
-        }else{
-         return response.json()
-        }
-      } )
-      .then(rdata => dispatch({ type: ADD_MEDICINE, payload: rdata}))
-      .then((error) => dispatch(errorMedicine(error)));
+    postmedicineData(data)
+      .then(response =>
+        dispatch({ type: ADD_MEDICINE, payload: response.data })
+      )
+      .catch(error => dispatch(errorMedicine(error)));
   } catch (error) {
-    dispatch(errorMedicine(error))
+    dispatch(errorMedicine(error));
   }
 };
 
 export const updatemedicineData = data => dispatch => {
   try {
-    fetch(API_URL + "medicines/" + data.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(rdata => dispatch({ type: UPDATE_MEDICINE, payload: rdata }))
-      .then(error => console.log(error));
+    editMedicineData(data)
+      .then(response =>
+        dispatch({ type: UPDATE_MEDICINE, payload: response.data })
+      )
+      .catch(error => console.log(error));
   } catch (error) {}
 };
 
 export const deletemedicineData = id => dispatch => {
   try {
-    fetch(API_URL + "medicines/" + id, {
-      method: "DELETE"
-    })
+    removeMedicineData(id)
       .then(dispatch({ type: DELETE_MEDICINE, payload: id }))
       .catch(error => console.log(error));
   } catch (error) {
@@ -86,5 +65,5 @@ export const loadingMedicine = () => dispatch => {
 };
 
 export const errorMedicine = errors => dispatch => {
-  dispatch({ type: ERROR_MEDICINE, payload: errors});
+  dispatch({ type: ERROR_MEDICINE, payload: errors });
 };

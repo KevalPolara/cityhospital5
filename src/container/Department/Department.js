@@ -1,8 +1,11 @@
 import React from "react";
 import { Aeshthree, Heading } from "../../components/UI/Heading/Heading";
 import { Text } from "../../components/UI/Text/Text";
+import { useSelector } from "react-redux";
 
 function Department(props) {
+  const c1= useSelector((state)=>state.counter)
+
   return (
     <main>
       <br></br>
@@ -10,7 +13,7 @@ function Department(props) {
       <section id="departments" className="departments">
         <div className="container">
           <div className="section-title">
-            <Heading>Departments</Heading>
+            <Heading>Departments {c1.count}</Heading>
           </div>
           <div className="row">
             <div className="col-lg-3">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useDispatch, useSelector} from 'react-redux';
-import { Decrement, Increment } from '../../redux/action/counter.action';
+import { Decrement, Increment,IncrementbyFive } from '../../redux/slice/counter.slice';
 
 function Counter(props) {
     const c1= useSelector((state)=>state.counter)
@@ -10,7 +10,7 @@ function Counter(props) {
     const dispatch=useDispatch()
 
     const handleincrement=()=>{
-        dispatch(Increment())
+        dispatch(IncrementbyFive(5))
     }
 
     const handledecrement=()=>{
@@ -19,6 +19,9 @@ function Counter(props) {
     }
     return (
         <div>
+            <br></br>
+            <br></br>
+            <br></br>
             <br></br>
             <button onClick={handleincrement}>+</button>
             {c1.count}

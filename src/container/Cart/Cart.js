@@ -4,7 +4,7 @@ import {
   decrementCart,
   deleteCart,
   incrementCart
-} from "../../redux/action/cart.action";
+} from "../../redux/slice/cart.slice";
 import { idID } from "@mui/material/locale";
 
 function Cart(props) {
@@ -15,7 +15,6 @@ function Cart(props) {
   let finaData = cart.cart.map((v) => {
     let ans = medicine.medicine.find((m) => m.id === v.id);
   
-
     return { ...ans, qty1: v.qty};
   });
 

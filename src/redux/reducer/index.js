@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
-import { CounterReducer } from "./counter.reducer";
 import {medicineDatareducer} from './medicine.reducer'
 import { departmentreducer } from "./department.reducer";
-import { cartReducer } from "./cart.reducer";
 import { favReducer } from "./wishlist.reducer";
+import { doctorReducer } from "./doctor.reducer";
+import counterReducer from "../slice/counter.slice";
+import cartReducer from "../slice/cart.slice";
 
 export const rootReducer=combineReducers(
     {
-        counter : CounterReducer,
+        counter : counterReducer,
         medicines: medicineDatareducer,
         department : departmentreducer,
         cart : cartReducer,
-        fav:favReducer
+        fav:favReducer,
+        doctor:doctorReducer
     }
 )

@@ -8,12 +8,11 @@ import { useEffect } from "react";
 import { getmedicineData } from "../../redux/action/medicine.action";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
-import { addToCart } from "../../redux/action/cart.action";
-import { addWishlist, colurWishlist } from "../../redux/action/wishlist.action";
+import { addToCart } from "../../redux/slice/cart.slice";
+import { addWishlist, colourWishlist, colurWishlist } from "../../redux/action/wishlist.action";
 
 function MedicineData({ increment,  SetFav }) {
   let localdata = JSON.parse(localStorage.getItem("medicine"));
-  console.log(localdata);
 
   const [dataone, SetData] = useState(localdata);
   const [input, SetInput] = useState("");
@@ -28,7 +27,7 @@ function MedicineData({ increment,  SetFav }) {
 
   const cart= useSelector(state => state.cart);
   const fav=useSelector(state=>state.fav);
-  console.log(cart,fav);
+  console.log(cart);
 
   useEffect(() => {
     dispatch(getmedicineData());
@@ -36,15 +35,21 @@ function MedicineData({ increment,  SetFav }) {
 
   const handleAddCart = (event,id) => {
     event.preventDefault();
-    dispatch(addToCart(id));
+    dispatch(addToCart({id,qty:1}));
+     dispatch(colourWishlist(id))
+
     // increment(prev => prev + 1);
   };
 
   const handleFavIncre = (event, id) => {
     event.preventDefault();
     dispatch(addWishlist(id))
-
   };
+
+ const handlecolourFav=(event,id) =>{
+  event.preventDefault();
+
+ }
 
 
   const handleSortSearch = () => {
@@ -134,7 +139,8 @@ function MedicineData({ increment,  SetFav }) {
                       onHandleCart={event=> handleAddCart(event,v.id)}
                       favButVal="btn"
                       onHandleFav={event => handleFavIncre(event, v.id)}
-                      favourite={fav.fav.includes(v.id) ? true : false}
+                      // favourite={fav.fav.includes(v.id) ? true : false}
+                      favourite={event=>handlecolourFav(event,v.id)}
                     />
                   </Link>
                 </div>

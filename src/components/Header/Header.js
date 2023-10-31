@@ -80,7 +80,7 @@ function Header({ counter, fav}) {
                 </NavLink>
               </li>
               <li>
-                {/* <NavLink
+                <NavLink
                   to={"/counter"}
                   className={({ isActive, isPending }) =>
                     isActive ? "nav-link scrollto active" : "nav-link scrollto"}
@@ -88,7 +88,7 @@ function Header({ counter, fav}) {
                   href="./pages/departments.html"
                 >
                   Counter
-                </NavLink> */}
+                </NavLink>
               </li>
               <li>
                 <NavLink
