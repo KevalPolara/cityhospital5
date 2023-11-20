@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -7,11 +7,18 @@ import MailIcon from "@mui/icons-material/Mail";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useSelector } from "react-redux";
+import ThemeContext from "../../context/theme.context";
+import Switch from '@mui/material/Switch';
+
+
 
 function Header({ counter, fav}) {
   
   const cartone= useSelector(state => state.cart);  
+  const label = { inputProps: {'Switch demo' : 'aria-label'} };
   const favone=useSelector(state=>state.fav);
+  const theme = useContext(ThemeContext);
+  console.log(theme);
 
   let qty=0;
   {cartone.cart.map((v,i)=>
@@ -28,7 +35,7 @@ function Header({ counter, fav}) {
             <a href="mailto:contact@example.com">cityhospital@example.com</a>
             <i className="bi bi-phone" /> +91 9988776655
           </div>
-          <div className="d-none d-lg-flex social-links align-items-center">
+          <div className="`d-none d-lg-flex social-links align-items-center`">
             <a href="#" className="twitter">
               <i className="bi bi-twitter" />
             </a>
@@ -147,6 +154,9 @@ function Header({ counter, fav}) {
                   Contact
                 </NavLink>
               </li>
+
+          <Switch {...label} defaultUnchecked onClick={()=> theme.toggleTheme(theme.theme)} />
+
 
               {/* <li><NavLink to={"/appointement"} className="nav-link scrollto" activeClassName="active" href="./pages/contact.html"></NavLink></li> */}
             </ul>

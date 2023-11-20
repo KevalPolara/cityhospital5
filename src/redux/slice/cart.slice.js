@@ -22,14 +22,14 @@ export const cartSlice=createSlice({
               state.cart.push(action.payload);
             }
 
-            console.log(state.cart);
+            state.cart=state.cart
         } ,
 
         incrementCart : (state,action)=>{
           let index1=state.cart.findIndex(v=>v.id===action.payload);
           state.cart[index1].qty++; 
           
-          
+          state.cart=state.cart
         }, 
         
         decrementCart: (state,action)=>{
@@ -39,12 +39,15 @@ export const cartSlice=createSlice({
           state.cart[index2].qty--;
           }
 
+          state.cart=state.cart
+
         },
 
         deleteCart: (state,action)=>{
 
           state.cart=state.cart.filter((v)=>v.id!==action.payload);          
 
+          state.cart=state.cart
         }
         
         

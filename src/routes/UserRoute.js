@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import About from "../container/About/About";
 import Appointement from "../container/Appointement/Appointement";
 import Auth from "../container/Auth/Auth";
@@ -21,15 +21,20 @@ import Formone from '../container/Form/FormOne';
 import Counter from '../container/Counter/Counter';
 import Cart from '../container/Cart/Cart';
 import Wishlist from '../container/Wishlist/Wishlist';
+import ThemeContext from '../context/theme.context';
+
+
 
 
 function UserRoute(props) {
   const [counter,SetCounter]=useState(0);
   const [badgeCount, setBadgeCount] = useState(0);
   const [fav,SetFav]=useState([]);
+  const theme = useContext(ThemeContext)
 
     return (
         <>
+        <div className={`${theme.theme}`}>
        <Header counter={counter} fav={fav} />
         <Routes>
         <Route path="/" element={<Home />} />
@@ -54,7 +59,8 @@ function UserRoute(props) {
         {/* <Route path='*' element={<Error/>}/> */}
         {/* <Route path="/*" element={<Error/>} /> */}
       </Routes>
-      <Footer/>  
+      <Footer/>
+      </div>  
         </>
     );
 }

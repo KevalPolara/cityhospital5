@@ -5,11 +5,11 @@ import CardOne from "../Card/CardOne";
 import { Box, TextField } from "@mui/material";
 import { GridSearchIcon } from "@mui/x-data-grid";
 import { useEffect } from "react";
-import { getmedicineData } from "../../redux/action/medicine.action";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addToCart } from "../../redux/slice/cart.slice";
 import { addWishlist, colourWishlist, colurWishlist } from "../../redux/action/wishlist.action";
+import { getmedicine } from "../../redux/slice/medicine.slice";
 
 function MedicineData({ increment,  SetFav }) {
   let localdata = JSON.parse(localStorage.getItem("medicine"));
@@ -30,7 +30,7 @@ function MedicineData({ increment,  SetFav }) {
   console.log(cart);
 
   useEffect(() => {
-    dispatch(getmedicineData());
+    dispatch(getmedicine());
   }, []);
 
   const handleAddCart = (event,id) => {
@@ -53,28 +53,28 @@ function MedicineData({ increment,  SetFav }) {
 
 
   const handleSortSearch = () => {
-    let fdata = medidata.medicine.filter(v => {
+    // let fdata = medidata.medicine.filter(v => {
      
-      return (
-        v.name.toLowerCase().includes(input.toLowerCase()) ||
-        v.price.toString().includes(input.toString())
-      );
-    });
+    //   return (
+    //     v.name.toLowerCase().includes(input.toLowerCase()) ||
+    //     v.price.toString().includes(input.toString())
+    //   );
+    // });
 
 
-    fdata = medidata.medicine.sort((a, b) => {
-      if (sort === "az") {
-        return a.name.localeCompare(b.name);
-      } else if (sort === "za") {
-        return b.name.localeCompare(a.name);
-      } else if (sort === "lh") {
-        return a.price - b.price;
-      } else if (sort === "hl") {
-        return b.price - a.price;
-      }
-    });
+    // fdata = medidata.medicine.sort((a, b) => {
+    //   if (sort === "az") {
+    //     return a.name.localeCompare(b.name);
+    //   } else if (sort === "za") {
+    //     return b.name.localeCompare(a.name);
+    //   } else if (sort === "lh") {
+    //     return a.price - b.price;
+    //   } else if (sort === "hl") {
+    //     return b.price - a.price;
+    //   }
+    // });
 
-    return fdata;
+    // return fdata;
   };
 
   let finaldata = handleSortSearch();

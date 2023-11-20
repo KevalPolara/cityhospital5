@@ -925,7 +925,7 @@ section {
 # Counts
 --------------------------------------------------------------*/
 .counts {
-  background: #FFF4F3;
+  /* background: #FFF4F3; */
   padding: 70px 0 60px;
 }
 
@@ -2097,3 +2097,14 @@ a:hover{
   display: inline-block;
   margin-left: 7.0rem;
 }
+
+.light{
+  background-color: white !important;
+  color: black !important;
+}
+
+.dark{
+  background-color: black !important;
+  color: white !important;
+}
+

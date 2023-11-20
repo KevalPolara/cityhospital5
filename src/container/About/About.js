@@ -1,9 +1,9 @@
-import React from 'react';
 import { H3A } from '../../components/UI/Heading/Heading';
 import { Text } from '../../components/UI/Text/Text';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 function About(props) {
+  
   // const navigate=useNavigate();
 
     return (

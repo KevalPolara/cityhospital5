@@ -54,7 +54,7 @@ function Review(props) {
             // slidesPerView={3}
           >
             {data.map(v => {
-              console.log(v);
+              // console.log(v);
               return (
                 <div className="swiper">
                   <SwiperSlide>
