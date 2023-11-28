@@ -23,6 +23,8 @@ function Review(props) {
   useEffect(() => {
     getData();
   }, []);
+
+  
   return (
     <div>
       <section id="testimonials" className="testimonials">

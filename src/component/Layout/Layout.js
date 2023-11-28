@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 import Doctor from '../../admin/container/Doctor/Doctor';
 import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
 
 const drawerWidth = 240;
 
@@ -108,6 +109,11 @@ const iconitem=[
     label : 'Department',
     icon  : <LocalFireDepartmentIcon/>,
     to : '/admin/department'
+  },
+  {
+    label : 'Appoinment',
+    icon : <BookOnlineIcon/>,
+    to: '/admin/appoinment'
   }
 ]
 
@@ -156,10 +162,11 @@ export default function Layout({children}) {
           {iconitem.map((value, index) => (
             <ListItem
              key={index} 
-             disablePadding sx={{ display: 'block' }}
+             disablePadding sx={{display: 'block'}}
              component={Link}
              to={value.to}
              >
+
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -183,8 +190,8 @@ export default function Layout({children}) {
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+      <Box component="main" sx={{flexGrow: 1, p: 3}}>
+        <DrawerHeader/>
        {children}
       </Box>
     </Box>

@@ -7,7 +7,6 @@ const initialState={
 }
 
 export const departmentreducer=(state=initialState,action)=>{
-    console.log(action);
     
 
     switch(action.type){

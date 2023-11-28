@@ -31,4 +31,7 @@ export const DELETE_DOCTOR='DELETE_DOCTOR';
 export const UPDATE_DOCTOR='UPDATE_DOCTOR';
 
 
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+
+
 

@@ -4,9 +4,19 @@ import InputBox from "../../components/UI/InputBox/InputBox";
 import { Heading } from "../../components/UI/Heading/Heading";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { signUpRequest } from "../../redux/action/auth.action";
+import { useDispatch } from "react-redux";
 
 function Auth(props) {
   const [type, isType] = useState("login");
+  const { children, value, index, ...other } = props;
+
+  const dispatch = useDispatch();
+
+  const handleSingup = (data) =>{
+    console.log(data);
+    dispatch(signUpRequest(data));
+  }
 
   let authobj, initialValues;
 
@@ -65,12 +75,20 @@ function Auth(props) {
     validationSchema: authSchema,
     enableReinitialize: true,
     onSubmit: (values, action) => {
+
+      if(type=== "signUp"){
+        handleSingup(values);
+      }
       console.log(values);
       action.resetForm();
     }
   });
 
+  
+
   return (
+
+    
     <section id="appointment" className="appointment">
       <div classname="container">
         <div className="section-title">
@@ -196,7 +214,7 @@ function Auth(props) {
                   </Button>
                 </div>
               : <div className="text-center mt-3">
-                  <Button type="submit" btntype="outline" disabled={false}>
+                  <Button onClick={handleSingup} type="submit" btntype="outline" disabled={false}>
                     SignUp
                   </Button>
                 </div>}

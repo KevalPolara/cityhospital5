@@ -14,7 +14,7 @@ export const ThmeProvider = ({ children }) => {
 
   const toggleTheme = val => {
     let newTheme = val === "dark" ? "light" : "dark";
-    dispatch({ type: TOOGLE_THEME, payload: newTheme});
+    dispatch({type: TOOGLE_THEME, payload: newTheme});
   };
 
   return (

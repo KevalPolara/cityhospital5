@@ -51,10 +51,10 @@ export const appointementSchema = yup.object().shape({
       /^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/,
       "Only One Space Allowed Between One Letter"
     )
-    .test("message", "Only 5 Character Allowed", function(value) {
+    .test("message", "Minimum 5 Character Allowed", function(value) {
       let arr = value.split(" ");
       // value ne array na format ma convert karavi
-      if (arr.length <= 5) {
+      if (arr.length >= 5) {
         return true;
       } else {
         return false;
@@ -64,15 +64,4 @@ export const appointementSchema = yup.object().shape({
   pres: yup
     .mixed()
     .required("Plese Upload a File")
-    .test('fileSize',
-    'The File is too large',
-    function(value) {
-      console.log(value)
-       if(value && value[0].size <= 1000000){
-        return true;
-      }else{
-        return false;
-      }
-      
-    }),
   })

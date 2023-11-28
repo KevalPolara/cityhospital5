@@ -8,19 +8,19 @@ const initialState = {
 }
 
 export const getmedicine = createAsyncThunk(
-    'medicine/get',
+    'medicines/get',
     async ()=>{
       await new Promise((resolve,reject)=>{
-            resolve,2000
+            setTimeout(resolve,2000)
         })
         let response =await getMedicineData();
         console.log(response);
         return response.data;
     }
 )
-const onLoading = ()=>{
-    isLoading = true;
-    error = null;
+const onLoading = (state,action)=>{
+    state.isLoading = true;
+    state.error = null;
 }
 export const medicineSlice = createSlice({
     name : 'medicine',

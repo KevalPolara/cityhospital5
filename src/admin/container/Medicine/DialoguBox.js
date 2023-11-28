@@ -19,6 +19,8 @@ export default function DialoguBox() {
   const dispatch=useDispatch()
   const medidata= useSelector((state)=>state.medicines);
 
+  console.log(medidata);
+
   useEffect(() => {
     dispatch(getmedicineData())
   }, []);

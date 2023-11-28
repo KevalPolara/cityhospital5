@@ -9,7 +9,6 @@ const initialState = {
 };
 
 export const favReducer = (state = initialState, action) => {
-  console.log(action, state);
   switch (action.type) {
     case ADD_TO_WISHLIST:
       if (state.fav.includes(action.payload.id)) {
