@@ -1,15 +1,34 @@
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
-import { SIGNUP_REQUEST } from '../ActionTypes'
-import { signUpAPI } from '../../common/api/auth.api'
+import { LOGIN_REQUEST, SIGNUP_REQUEST } from "../ActionTypes";
+import { loginApi, signUpAPI } from "../../common/api/auth.api";
+import { authError, loginError, loginResponse, signUpResponse } from "../action/auth.action";
+import { setAlert } from "../slice/alert.slice";
 
-// worker Saga: will be fired on USER_FETCH_REQUESTED actions
+// worker Saga: will be fired on USER_FETCH_REQUESTED actions:-
 function* SignUpUser(action) {
   try {
-    const user = yield call(signUpAPI, action.payload)
-    yield put({ type: 'USER_FETCH_SUCCEEDED', user: user})
+    const user = yield call(signUpAPI, action.payload);
+    console.log(user.user);
+    console.log(user.message);
+
+    yield put(signUpResponse(user.user));
+    yield put(setAlert({text : user.message , color : 'success'}));
   } catch (e) {
-    yield put({ type: 'USER_FETCH_FAILED', message: e.message })
+    yield put(authError(e.message));
+    yield put(setAlert({text : e.message , color : 'error'}));
+
+  }
+}
+
+function* loginUser(action){
+  try{
+    const user = yield call(loginApi, action.payload);
+    console.log(user);
+    yield put(loginResponse(user.user))
+  }catch(e){
+    console.log(e.message);
+    yield put(loginError(e.message))
   }
 }
 
@@ -19,15 +38,11 @@ function* SignUpUser(action) {
 */
 // Watcher Function :-
 function* watchSaga() {
-  yield takeEvery(SIGNUP_REQUEST  , SignUpUser)
+  yield takeEvery(SIGNUP_REQUEST, SignUpUser);
+  yield takeEvery(LOGIN_REQUEST,loginUser);
 }
  
-export default function* authSaga(){
-    yield all([
-        watchSaga(),
-    ])
+
+export default function* authSaga() {
+  yield all([watchSaga()]);
 }
-
-
-
-

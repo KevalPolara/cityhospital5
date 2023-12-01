@@ -4,7 +4,7 @@ import InputBox from "../../components/UI/InputBox/InputBox";
 import { Heading } from "../../components/UI/Heading/Heading";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { signUpRequest } from "../../redux/action/auth.action";
+import { loginRequest, signUpRequest } from "../../redux/action/auth.action";
 import { useDispatch } from "react-redux";
 
 function Auth(props) {
@@ -16,6 +16,10 @@ function Auth(props) {
   const handleSingup = (data) =>{
     console.log(data);
     dispatch(signUpRequest(data));
+  }
+
+  const handleLogin = (data) =>{
+    dispatch(loginRequest(data))
   }
 
   let authobj, initialValues;
@@ -78,13 +82,14 @@ function Auth(props) {
 
       if(type=== "signUp"){
         handleSingup(values);
+      }else if(type === "login"){
+        handleLogin(values);
       }
       console.log(values);
       action.resetForm();
     }
   });
 
-  
 
   return (
 

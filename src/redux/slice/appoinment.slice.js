@@ -1,6 +1,6 @@
 import { async } from "@firebase/util"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { addDoc, collection, getDoc, getDocs } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 import { postAppoinmentData } from "../../common/api/appoinment.api"
 
@@ -49,6 +49,23 @@ export const getAppoinmentData = createAsyncThunk(
   
 )
 
+export const deleteAppoinmentData = createAsyncThunk(
+    'appoinment/delete',
+
+    async (id) =>{
+        await deleteDoc(doc(db, "appoinemnts", id));
+        }
+)
+
+export const editAppoinmentData = createAsyncThunk(
+    'appoinment/put',
+    
+    async (data)=>{
+    const washingtonRef = doc(db, "appoinemnts",data.id);
+    await updateDoc(washingtonRef, data);
+    }
+)
+
 export const appoinmentSlice = createSlice({
     name : 'appoinment',
     initialState,
@@ -58,13 +75,24 @@ export const appoinmentSlice = createSlice({
     
     extraReducers : (builder) =>  {
         builder.addCase(addAppoinmentData.fulfilled,(state,action)=>{
-            console.log(action);
             state.isLaoding = false
             state.error = null 
             state.appoinment = action.payload
         })
         builder.addCase(getAppoinmentData.fulfilled,(state,action)=>{
+            state.isLaoding = false
+            state.error = null 
+            state.appoinment = action.payload
+        })
+
+        builder.addCase(deleteAppoinmentData.fulfilled,(state,action)=>{
             console.log(action);
+            state.isLaoding = false
+            state.error = null 
+            state.appoinment = action.payload
+        })
+
+        builder.addCase(editAppoinmentData.fulfilled,(state,action)=>{
             state.isLaoding = false
             state.error = null 
             state.appoinment = action.payload

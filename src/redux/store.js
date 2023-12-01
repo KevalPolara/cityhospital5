@@ -6,7 +6,7 @@ import storage from 'redux-persist/lib/storage'
 import persistReducer from "redux-persist/es/persistReducer";
 import { themeReducer } from "../context/reducer/context.reducer";
 import rootSaga from "./saga/rootSaga";
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware from 'redux-saga';
 
 const persisstConfig={
     key : 'root',
@@ -14,7 +14,7 @@ const persisstConfig={
     whitelist: ['medicines','cart']
 }
 
-const persistedReducer=persistReducer(persisstConfig,rootReducer)
+const persistedReducer =persistReducer(persisstConfig,rootReducer);
 const sagaMiddleware = createSagaMiddleware()
 
 const middlewares = [sagaMiddleware,thunk]
@@ -22,10 +22,13 @@ const middlewares = [sagaMiddleware,thunk]
 
 export const configureStore=()=>{
     let store=createStore(persistedReducer,applyMiddleware(...middlewares))
-    let persistor=persistStore(store)
+    // let persistor=persistStore(store)
 
     sagaMiddleware.run(rootSaga)
 
 
-    return {store,persistor};
+    return store;
 }
+
+export let store = configureStore();
+export let persistor = persistStore(store)

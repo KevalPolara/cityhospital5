@@ -9,6 +9,7 @@ import sliceReducer from "../slice/medicine.slice";
 import { themeReducer } from "../../context/reducer/context.reducer";
 import appoinmentSlice from "../slice/appoinment.slice";
 import { authReducer } from "./auth.reducer";
+import alertReducer from "../slice/alert.slice";
 
 export const rootReducer=combineReducers(
     {
@@ -19,6 +20,7 @@ export const rootReducer=combineReducers(
         fav:favReducer,
         doctor:doctorReducer,
         appoinment : appoinmentSlice,
-        auth : authReducer
+        auth : authReducer,
+        alert :alertReducer,
     }
 )
