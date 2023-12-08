@@ -4,7 +4,9 @@ import {
   signInWithEmailAndPassword,
   email,
   password,
-  sendEmailVerification
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signOut
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 
@@ -23,6 +25,9 @@ export const signUpAPI = data => {
           sendEmailVerification(auth.currentUser)
             .then(() => {
               console.log("Email verification sent!");
+
+              if (user.emailVerified) {
+              }
               resolve({ message: "Email verification sent!", user: user });
               // ...
             })
@@ -39,7 +44,6 @@ export const signUpAPI = data => {
           } else if (errorCode.localeCompare("auth/weak-password") === 0) {
             reject({ message: "Minimum 6 Character Required" });
           }
-
         });
     });
   } catch (error) {
@@ -61,20 +65,15 @@ export const loginApi = data => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          resolve({ login: "Your Login is Succesfully Sumbmited", user: user});
 
-          sendEmailVerification(auth.currentUser)
-            .then(() => {
-              console.log("Email verification sent!");
-              resolve({ message: "Your Login Succesfully Completed", user: user });
-              // ...
-            })
-            .catch(error => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
+          if (user.emailVerified) {
+            resolve({
+              message: "Your Login is Succesfully Sumbmited",
+              user: user
             });
-
-          // ...
+          } else {
+            reject({ message: "Your Email is not Verified", user: user });
+          }
         })
         .catch(error => {
           const errorCode = error.code;
@@ -86,4 +85,55 @@ export const loginApi = data => {
         });
     });
   } catch (error) {}
+};
+
+export const fPasswordApi = data => {
+  console.log(data);
+
+  try {
+    return new Promise((resolve, reject) => {
+      const auth = getAuth();
+      sendPasswordResetEmail(auth, data.email)
+        .then(() => {
+          resolve({ message: "Your Password Requested Sent" });
+          // Password reset email sent!
+          // ..
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode.localeCompare("auth/user-not-found") === 0) {
+            reject({message: "Invalid Email"});
+          }
+        });
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const logOutApi = data => {
+  console.log(data);
+
+  try {
+    return new Promise((resolve, reject) => {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          resolve({ message: "Your Logout Succesfully Completed" });
+          // Sign-out successful.
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          reject({ message: error.message });
+
+          // An error happened.
+        });
+    });
+  } catch (error) {
+    
+  }
 };

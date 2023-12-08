@@ -6,22 +6,27 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ThemeContext from "../../context/theme.context";
 import Switch from '@mui/material/Switch';
 import LanguageContext, { useLanguage } from "../../context/language.context";
 import { LANGUAGE } from "../../context/ActionType";
+import { logoutRequest } from "../../redux/action/auth.action";
 
 function Header({counter, fav}) {
   
-  const cartone= useSelector(state => state.cart);  
+  const cartone= useSelector(state => state.cart); 
+  console.log(cartone); 
   const label = { inputProps: {'Switch demo' : 'aria-label'} };
   const favone=useSelector(state=>state.fav);
   const theme = useContext(ThemeContext);
   const {state,dispatch} = useContext(LanguageContext);
   const language = useContext(LanguageContext);
+  const auth = useSelector(state => state.auth);
+  const dispatchdata = useDispatch();
+  // console.log(auth);
 
-  console.log(language);
+  // console.log(language);
 
   const handleLanguageChange = (e) =>{
     const selectedLanguage = e.target.value;
@@ -30,12 +35,17 @@ function Header({counter, fav}) {
     dispatch({type : LANGUAGE , payload : selectedLanguage})
   }
 
-  console.log(theme);
+  // console.log(theme);
 
   let qty=0;
   {cartone.cart.map((v,i)=>
     qty= qty +v.qty
-  )} 
+  )}
+  console.log(qty);
+
+  const handleLogOut = () =>{
+    dispatchdata(logoutRequest())
+  }
 
   return (
     <div className="main-header">
@@ -188,9 +198,18 @@ function Header({counter, fav}) {
             <span className="d-none d-md-inline">Make an</span>
             Appointment
           </NavLink>
-          <NavLink to={"/auth"} className="appointment-btn scrollto">
+          {
+            auth.user ? 
+            <NavLink to={"/"} onClick={handleLogOut} className="appointment-btn scrollto">
+            <span className="d-none d-md-inline">LogOut</span>
+          </NavLink>
+
+:
+            <NavLink to={"/auth"} className="appointment-btn scrollto">
             <span className="d-none d-md-inline">Login/ Signup</span>
           </NavLink>
+          }
+          
           <NavLink to={"/cart"}>
           <Badge badgeContent={qty} color="primary">
             <AddShoppingCartIcon className="addicon" />

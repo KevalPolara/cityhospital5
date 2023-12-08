@@ -18,20 +18,19 @@ function Alert(props) {
             horizontal: "right"
           }
         });
+
+        let useEffetRef = setTimeout(() => {
+          dispatch(setReset());
+        }, 2000);
+
+        return () => {
+          clearTimeout(useEffetRef);
+        };
       }
-
-      let useEffetRef = (
-       setTimeout(()=>{
-          dispatch(setReset())
-        },2000)
-      );
-
-      return () => {
-        clearTimeout(useEffetRef);
-      };
     },
     [alert.text]
   );
+
   return <div />;
 }
 

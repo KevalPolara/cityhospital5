@@ -1,13 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
 function Privateroute(props) {
 
-    let auth=true;
+    let auth= useSelector(state => state.auth);
+    console.log(auth);
     return (
         <div>
             {
-              auth ? <Outlet/> : <Navigate to={"/auth"} replace/>  
+
+                // OutLet Means That a Bar Header And Footer Batavche and
+                // Baki Badhu Am ne Am j rehshe.
+              auth.user ? <Outlet/> : <Navigate to={"/auth"} replace/>  
             }
             
         </div>

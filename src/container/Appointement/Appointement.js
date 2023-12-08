@@ -5,8 +5,16 @@ import { useFormik } from "formik";
 import { appointementSchema } from "../../schemas";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Buttonone from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import CardMedia from '@mui/material/CardMedia';
+
 import {
   addAppoinmentData,
+  addApt,
   deleteAppoinmentData,
   editAppoinmentData,
   getAppoinmentData
@@ -15,11 +23,8 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-
-
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,15 +37,23 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index &&
+      {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>
-            {children}
-          </Typography>
-        </Box>}
+          <Typography>{children}</Typography>
+        </Box>
+      )}
     </div>
   );
 }
+
+const bull = (
+  <Box
+    component="span"
+    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
+  >
+    •
+  </Box>
+);
 
 CustomTabPanel.propTypes = {
   children: PropTypes.node,
@@ -55,23 +68,22 @@ function a11yProps(index) {
   };
 }
 function DataGridDemo() {
-
-  const appoinment = useSelector(state => state.appoinment);
+  const appoinment = useSelector((state) => state.appoinment);
+  console.log(appoinment);
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(getAppoinmentData());
+  // }, []);
 
-  useEffect(() => {
-    dispatch(getAppoinmentData());
-  }, []);
+  const handleDelete = (id) => {
+    console.log(id);
+    dispatch(deleteAppoinmentData(id));
+  };
 
- const handleDelete = (id) =>{
-  console.log(id);
-  dispatch(deleteAppoinmentData(id))
-  }  
-  
-const  handleEdit = (data) =>{
-  dispatch(editAppoinmentData(data))
-  }
+  const handleEdit = (data) => {
+    dispatch(editAppoinmentData(data));
+  };
 
   const columns = [
     { field: "name", headerName: "Name", width: 70 },
@@ -85,14 +97,15 @@ const  handleEdit = (data) =>{
       field: "action",
       headerName: "Action",
       width: 130,
-      renderCell: params =>
+      renderCell: (params) => (
         <strong>
-          <DeleteIcon onClick={() => handleDelete(params.row.id)}>
-            Delete
-          </DeleteIcon>
+        <DeleteIcon onClick={() => handleDelete(params.row.id)}>
+          Delete
+        </DeleteIcon>
 
-          <EditIcon onClick={() => handleEdit(params.row)} />
+        <EditIcon onClick={() => handleEdit(params.row)} />
         </strong>
+      )
     }
   ];
 
@@ -129,14 +142,16 @@ const initialValues = {
 
 function Appointement(props) {
   const [value, setValue] = React.useState(0);
-  
+  const appoinment = useSelector((state) => state.appoinment);
+  console.log(appoinment.appoinment);
 
   const dispatch = useDispatch();
-
 
   const handleChanges = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log(value);
 
   const {
     values,
@@ -144,19 +159,24 @@ function Appointement(props) {
     handleBlur,
     handleChange,
     handleSubmit,
+    setFieldValue,
     touched
   } = useFormik({
     initialValues: initialValues,
     validationSchema: appointementSchema,
     onSubmit: (values, action) => {
+      console.log(values);
       //
+
       dispatch(addAppoinmentData(values));
+      dispatch(addApt(values));
+      setValue(1);
 
       action.resetForm();
       let arr = values.message.split(" ");
       console.log(arr);
 
-      let ans = arr.map(v => v[0].toUpperCase() + v.substring(1));
+      let ans = arr.map((v) => v[0].toUpperCase() + v.substring(1));
       return console.log(ans.join(" "));
     }
   });
@@ -176,182 +196,176 @@ function Appointement(props) {
                 <Tab label="Appoinment List" {...a11yProps(1)} />
               </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
-              <div className="section-title">
-                <Heading>Make an Appointment</Heading>
-                <p>
-                  Aenean enim orci, suscipit vitae sodales ac, semper in ex.
-                  Nunc aliquam eget nibh eu euismod. Donec dapibus blandit quam
-                  volutpat sollicitudin. Fusce tincidunt sit amet ex in
-                  volutpat. Donec lacinia finibus tortor. Curabitur luctus
-                  eleifend odio. Phasellus placerat mi et suscipit pulvinar.
-                </p>
-              </div>
-
-              <form
-                action="#"
-                role="form"
-                onSubmit={handleSubmit}
-                className="php-email-form"
-              >
-                <div className="row">
-                  <div className="col-md-4 form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.name}
-                      className="form-control"
-                      id="name"
-                      placeholder="Your Name"
-                      data-rule="minlen:4"
-                      data-msg="Please enter at least 4 chars"
-                    />
-
-                    {touched.name && errors.name
-                      ? <div className="error-handle">
-                          {errors.name}
-                        </div>
-                      : null}
-                    <div className="validate" />
-                  </div>
-                  <div className="col-md-4 form-group mt-3 mt-md-0">
-                    <input
-                      type="email"
-                      className="form-control"
-                      name="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                      id="email"
-                      placeholder="Your Email"
-                      data-rule="email"
-                      data-msg="Please enter a valid email"
-                    />
-                    {touched.email && errors.email
-                      ? <div className="error-handle">
-                          {errors.email}
-                        </div>
-                      : null}
-                    <div className="validate" />
-                  </div>
-                  <div className="col-md-4 form-group mt-3 mt-md-0">
-                    <input
-                      type="tel"
-                      className="form-control"
-                      name="phone"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.phone}
-                      id="phone"
-                      placeholder="Your Phone"
-                      data-rule="minlen:4"
-                      data-msg="Please enter at least 4 chars"
-                    />
-                    {touched.phone && errors.phone
-                      ? <div className="error-handle">
-                          {errors.phone}
-                        </div>
-                      : null}
-                    <div className="validate" />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-4 form-group mt-3">
-                    <input
-                      type="date"
-                      name="date"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.date}
-                      className="form-control datepicker"
-                      id="date"
-                      placeholder="Appointment Date"
-                      data-rule="minlen:4"
-                      data-msg="Please enter at least 4 chars"
-                    />
-                    {touched.date && errors.date
-                      ? <div className="error-handle">
-                          {errors.date}
-                        </div>
-                      : null}
-                    <div className="validate" />
-                  </div>
-                  <div className="col-md-4 form-group mt-3">
-                    <select
-                      name="department"
-                      value={values.department}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      id="department"
-                      className="form-select"
-                    >
-                      <option value="">Select Department</option>
-                      <option value="Department 1">Department 1</option>
-                      <option value="Department 2">Department 2</option>
-                      <option value="Department 3">Department 3</option>
-                    </select>
-
-                    {touched.department && errors.department
-                      ? <div className="error-handle">
-                          {errors.department}
-                        </div>
-                      : null}
+            {
+              <>
+                <CustomTabPanel value={value} index={0}>
+                  <div className="section-title">
+                    <Heading>Make an Appointment</Heading>
+                    <p>
+                      Aenean enim orci, suscipit vitae sodales ac, semper in ex.
+                      Nunc aliquam eget nibh eu euismod. Donec dapibus blandit
+                      quam volutpat sollicitudin. Fusce tincidunt sit amet ex in
+                      volutpat. Donec lacinia finibus tortor. Curabitur luctus
+                      eleifend odio. Phasellus placerat mi et suscipit pulvinar.
+                    </p>
                   </div>
 
-                  <div className="col-md-4 form-group mt-3 mt-md-0">
-                    <input
-                      type="file"
-                      className="form-control one"
-                      name="pres"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      id="file"
-                    />
-                    {touched.pres && errors.pres
-                      ? <div className="error-handle one">
-                          {errors.pres}
-                        </div>
-                      : null}
-                  </div>
-                </div>
+                  <form
+                    action="#"
+                    role="form"
+                    onSubmit={handleSubmit}
+                    className="php-email-form"
+                  >
+                    <div className="row">
+                      <div className="col-md-4 form-group">
+                        <input
+                          type="text"
+                          name="name"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.name}
+                          className="form-control"
+                          id="name"
+                          placeholder="Your Name"
+                          data-rule="minlen:4"
+                          data-msg="Please enter at least 4 chars"
+                        />
 
-                <div className="form-group mt-3">
-                  <textarea
-                    className="form-control"
-                    name="message"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.message}
-                    rows={5}
-                    placeholder="Message (Optional)"
-                    defaultValue={""}
-                  />
-                  {touched.message && errors.message
-                    ? <div className="error-handle">
-                        {errors.message}
+                        {touched.name && errors.name ? (
+                          <div className="error-handle">{errors.name}</div>
+                        ) : null}
+                        <div className="validate" />
                       </div>
-                    : null}
-                </div>
+                      <div className="col-md-4 form-group mt-3 mt-md-0">
+                        <input
+                          type="email"
+                          className="form-control"
+                          name="email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                          id="email"
+                          placeholder="Your Email"
+                          data-rule="email"
+                          data-msg="Please enter a valid email"
+                        />
+                        {touched.email && errors.email ? (
+                          <div className="error-handle">{errors.email}</div>
+                        ) : null}
+                        <div className="validate" />
+                      </div>
+                      <div className="col-md-4 form-group mt-3 mt-md-0">
+                        <input
+                          type="tel"
+                          className="form-control"
+                          name="phone"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.phone}
+                          id="phone"
+                          placeholder="Your Phone"
+                          data-rule="minlen:4"
+                          data-msg="Please enter at least 4 chars"
+                        />
+                        {touched.phone && errors.phone ? (
+                          <div className="error-handle">{errors.phone}</div>
+                        ) : null}
+                        <div className="validate" />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-4 form-group mt-3">
+                        <input
+                          type="date"
+                          name="date"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.date}
+                          className="form-control datepicker"
+                          id="date"
+                          placeholder="Appointment Date"
+                          data-rule="minlen:4"
+                          data-msg="Please enter at least 4 chars"
+                        />
+                        {touched.date && errors.date ? (
+                          <div className="error-handle">{errors.date}</div>
+                        ) : null}
+                        <div className="validate" />
+                      </div>
+                      <div className="col-md-4 form-group mt-3">
+                        <select
+                          name="department"
+                          value={values.department}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          id="department"
+                          className="form-select"
+                        >
+                          <option value="">Select Department</option>
+                          <option value="Department 1">Department 1</option>
+                          <option value="Department 2">Department 2</option>
+                          <option value="Department 3">Department 3</option>
+                        </select>
 
-                <div className="mb-3">
-                  <div className="loading">Loading</div>
-                  <div className="error-message" />
-                  <div className="sent-message">
-                    Your appointment request has been sent successfully. Thank
-                    you!
-                  </div>
-                </div>
-                <div className="text-center">
-                  <Button type="submit">Make an Appointment</Button>
-                </div>
-              </form>
-            </CustomTabPanel>
+                        {touched.department && errors.department ? (
+                          <div className="error-handle">
+                            {errors.department}
+                          </div>
+                        ) : null}
+                      </div>
 
-            <CustomTabPanel value={value} index={1}>
-              {DataGridDemo()}
-            </CustomTabPanel>
+                      <div className="col-md-4 form-group mt-3 mt-md-0">
+                        <input
+                          type="file"
+                          className="form-control one"
+                          name="pres"
+                          onChange={(event) =>
+                            setFieldValue("pres", event.target.files[0])
+                          }
+                          id="file"
+                          onBlur={handleBlur}
+                        />
+                        {touched.pres && errors.pres ? (
+                          <div className="error-handle one">{errors.pres}</div>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="form-group mt-3">
+                      <textarea
+                        className="form-control"
+                        name="message"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.message}
+                        rows={5}
+                        placeholder="Message (Optional)"
+                        defaultValue={""}
+                      />
+                      {touched.message && errors.message ? (
+                        <div className="error-handle">{errors.message}</div>
+                      ) : null}
+                    </div>
+
+                    <div className="mb-3">
+                      <div className="loading">Loading</div>
+                      <div className="error-message" />
+                      <div className="sent-message">
+                        Your appointment request has been sent successfully.
+                        Thank you!
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <Button type="submit">Make an Appointment</Button>
+                    </div>
+                  </form>
+                </CustomTabPanel>
+
+                <CustomTabPanel value={value} index={1}>
+                {DataGridDemo()}
+                </CustomTabPanel>
+              </>
+            }
           </Box>
         </div>
       </section>

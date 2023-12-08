@@ -4,14 +4,16 @@ import InputBox from "../../components/UI/InputBox/InputBox";
 import { Heading } from "../../components/UI/Heading/Heading";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { loginRequest, signUpRequest } from "../../redux/action/auth.action";
+import { fPasswordRequest, loginRequest, signUpRequest } from "../../redux/action/auth.action";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Auth(props) {
   const [type, isType] = useState("login");
   const { children, value, index, ...other } = props;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSingup = (data) =>{
     console.log(data);
@@ -19,7 +21,16 @@ function Auth(props) {
   }
 
   const handleLogin = (data) =>{
-    dispatch(loginRequest(data))
+    dispatch(loginRequest({
+    data :data,
+    callback : (route) =>{
+      navigate(route);
+    }  
+  }));
+  }
+
+  const handlefPassword = (data) =>{
+    dispatch(fPasswordRequest(data));
   }
 
   let authobj, initialValues;
@@ -84,6 +95,8 @@ function Auth(props) {
         handleSingup(values);
       }else if(type === "login"){
         handleLogin(values);
+      }else if(type === "fpassword"){
+        handlefPassword(values);
       }
       console.log(values);
       action.resetForm();

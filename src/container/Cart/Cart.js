@@ -9,26 +9,25 @@ import { idID } from "@mui/material/locale";
 
 function Cart(props) {
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const medicine = useSelector((state) => state.medicines);
   const dispatch = useDispatch();
 
   let finaData = cart.cart.map((v) => {
+    console.log(v.qty);
     let ans = medicine.medicine.find((m) => m.id === v.id);
+    console.log(ans);
   
     return { ...ans, qty1: v.qty};
   });
 
   console.log(finaData);
 
-  let qty=finaData.reduce((acc,v)=>acc + v.qty1,0)
+  let qty = finaData.reduce((acc,v)=>acc + v.qty1,0)
+  console.log(qty);
 
-  let ansCart=finaData.reduce((acc, v) => acc + v.price * v.qty1, 0);
-
-  // let ans = finaData.reduce(())
-   
+  let ansCart = finaData.reduce((acc,v) => acc +(v.qty1 * v.price), 0);
   console.log(ansCart);
-
-  // console.log(cart, medicine);
 
   const handleIncrement = (id) => {
     dispatch(incrementCart(id));

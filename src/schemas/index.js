@@ -50,18 +50,28 @@ export const appointementSchema = yup.object().shape({
     .matches(
       /^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$/,
       "Only One Space Allowed Between One Letter"
-    )
-    .test("message", "Minimum 5 Character Allowed", function(value) {
-      let arr = value.split(" ");
-      // value ne array na format ma convert karavi
-      if (arr.length >= 5) {
-        return true;
-      } else {
-        return false;
-      }
-    }),
+    ),
+    // .test("message", "Minimum 5 Words Allowed", function(value) {
+    //   let arr = value.split(" ");
+    //   // value ne array na format ma convert karavi
+    //   if (arr.length >= 5) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }),
 
   pres: yup
     .mixed()
     .required("Plese Upload a File")
+    .test("pres", "Please Upload a Less Than 500KB File" , function(value){
+        console.log(value);
+
+        if(value.size <= 500000){
+          console.log("kkkk");
+          return true
+        }else {
+          return false
+        }
+    })
   })

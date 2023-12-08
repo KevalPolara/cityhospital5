@@ -23,8 +23,7 @@ function MedicineData({ increment,  SetFav }) {
   const [favourite, SetFavourite] = useState(false);
   const dispatch = useDispatch();
   const medidata = useSelector(state => state.medicines);
-  console.log(medidata);
-
+  console.log(medidata.medicine);
   const cart= useSelector(state => state.cart);
   const fav=useSelector(state=>state.fav);
   console.log(cart);
@@ -35,7 +34,7 @@ function MedicineData({ increment,  SetFav }) {
 
   const handleAddCart = (event,id) => {
     event.preventDefault();
-    dispatch(addToCart({id,qty:1}));
+    dispatch(addToCart({id:id,qty:1}));
      dispatch(colourWishlist(id))
 
     // increment(prev => prev + 1);
@@ -48,7 +47,6 @@ function MedicineData({ increment,  SetFav }) {
 
  const handlecolourFav=(event,id) =>{
   event.preventDefault();
-
  }
 
 

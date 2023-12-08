@@ -13,9 +13,9 @@ const alerSlice = createSlice({
             console.log(action);
             state.text = action.payload.text;
             state.color = action.payload.color;
-
         },
-        setReset : (state,action) =>{
+        
+        setReset : (state) =>{
             state.text = '';
             state.color = '';
         }

@@ -13,12 +13,7 @@ function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left"
-          }}
-        >
+        <SnackbarProvider>
           <ThmeProvider>
             <LanguageProvider>
               <PersistGate loading={null} persistor={persistor}>
