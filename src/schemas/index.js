@@ -64,14 +64,14 @@ export const appointementSchema = yup.object().shape({
   pres: yup
     .mixed()
     .required("Plese Upload a File")
-    .test("pres", "Please Upload a Less Than 500KB File" , function(value){
-        console.log(value);
+    // .test("pres", "Please Upload a Less Than 500KB File" , function(value){
+    //     console.log(value);
 
-        if(value.size <= 500000){
-          console.log("kkkk");
-          return true
-        }else {
-          return false
-        }
-    })
+    //     if(value.size <= 500000){
+    //       console.log("kkkk");
+    //       return true
+    //     }else {
+    //       return false
+    //     }
+    // })
   })

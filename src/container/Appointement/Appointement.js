@@ -67,45 +67,51 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`
   };
 }
-function DataGridDemo() {
+function DataGridDemo(setValue) {
   const appoinment = useSelector((state) => state.appoinment);
-  console.log(appoinment);
+  const [editing ,setEditing] = useState(false);
+  console.log(editing);
   const dispatch = useDispatch();
+  // const [value ,setValue] = useState(0);
 
-  // useEffect(() => {
-  //   dispatch(getAppoinmentData());
-  // }, []);
 
-  const handleDelete = (id) => {
-    console.log(id);
-    dispatch(deleteAppoinmentData(id));
+  const handleDelete = (data) => {
+    dispatch(deleteAppoinmentData(data));
   };
+  
+  useEffect(() => {
+    dispatch(getAppoinmentData());
+  }, []);
+
 
   const handleEdit = (data) => {
-    dispatch(editAppoinmentData(data));
+    setEditing(data);
+    setValue(0);
+
   };
 
+
+
   const columns = [
-    { field: "name", headerName: "Name", width: 70 },
+    { field: "name", headerName: "Name", width: 130 },
     { field: "email", headerName: "email", width: 130 },
     { field: "phone", headerName: "phone", width: 130 },
     { field: "date", headerName: "date", width: 130 },
     { field: "department", headerName: "department", width: 130 },
     { field: "message", headerName: "message", width: 130 },
-    { field: "pres", headerName: "pres", width: 130 },
+    { field: "pres", headerName: "pres", width: 130},
     {
       field: "action",
       headerName: "Action",
       width: 130,
-      renderCell: (params) => (
+      renderCell: params =>
         <strong>
-        <DeleteIcon onClick={() => handleDelete(params.row.id)}>
-          Delete
-        </DeleteIcon>
+          <DeleteIcon onClick={() => handleDelete(params.row)}>
+            Delete
+          </DeleteIcon>
 
-        <EditIcon onClick={() => handleEdit(params.row)} />
+          <EditIcon onClick={() => handleEdit(params.row)} />
         </strong>
-      )
     }
   ];
 
@@ -113,10 +119,12 @@ function DataGridDemo() {
     <div>
       <DataGrid
         rows={appoinment.appoinment}
+        // getrowid = {appoinment.appoinment.id}
         columns={columns}
         initialState={{
           pagination: {
             paginationModel: {
+              page: 0,
               pageSize: 5
             }
           }
@@ -143,15 +151,29 @@ const initialValues = {
 function Appointement(props) {
   const [value, setValue] = React.useState(0);
   const appoinment = useSelector((state) => state.appoinment);
-  console.log(appoinment.appoinment);
-
+  const [editing ,setEditing] = useState(false);
   const dispatch = useDispatch();
 
   const handleChanges = (event, newValue) => {
     setValue(newValue);
   };
 
-  console.log(value);
+  const handleDelete = (data) => {
+    dispatch(deleteAppoinmentData(data));
+  };
+  
+  useEffect(() => {
+    dispatch(getAppoinmentData());
+  }, []);
+
+  
+
+
+  const handleEdit = (data) => {
+    setValues(data)
+    setEditing(true);
+    setValue(0);
+  }
 
   const {
     values,
@@ -160,6 +182,7 @@ function Appointement(props) {
     handleChange,
     handleSubmit,
     setFieldValue,
+    setValues,
     touched
   } = useFormik({
     initialValues: initialValues,
@@ -168,12 +191,22 @@ function Appointement(props) {
       console.log(values);
       //
 
-      dispatch(addAppoinmentData(values));
-      dispatch(addApt(values));
+
+      if(editing == true){
+        console.log("keval Polara");
+        dispatch(editAppoinmentData(values));
+      }else{
+        console.log("Kp Patel");
+        dispatch(addApt(values));
+      }
+
+      setEditing(false);
       setValue(1);
 
+
+
       action.resetForm();
-      let arr = values.message.split(" ");
+      let arr = values.message.split(" ");  
       console.log(arr);
 
       let ans = arr.map((v) => v[0].toUpperCase() + v.substring(1));
@@ -325,6 +358,11 @@ function Appointement(props) {
                           id="file"
                           onBlur={handleBlur}
                         />
+
+                        <img src={  typeof values.pres === 'string'  ? values.pres : URL.createObjectURL(values.pres)}
+                            height={50}
+                            width={50}
+                         />
                         {touched.pres && errors.pres ? (
                           <div className="error-handle one">{errors.pres}</div>
                         ) : null}
@@ -356,14 +394,55 @@ function Appointement(props) {
                       </div>
                     </div>
                     <div className="text-center">
-                      <Button type="submit">Make an Appointment</Button>
+                      <Button type="submit">{editing === true ? 'Update An Appoinment' :'Make An Appoinment'}</Button>
                     </div>
                   </form>
                 </CustomTabPanel>
-
                 <CustomTabPanel value={value} index={1}>
-                {DataGridDemo()}
-                </CustomTabPanel>
+          {value === 1 && (
+    <div>
+      <DataGrid
+        rows={appoinment.appoinment}
+        columns={[
+          { field: "name", headerName: "Name", width: 130 },
+          { field: "email", headerName: "Email", width: 130 },
+          { field: "phone", headerName: "phone", width: 130 },
+          { field: "date", headerName: "date", width: 130 },
+          { field: "department", headerName: "department", width: 130 },
+          { field: "message", headerName: "message", width: 130 },
+          { field: "dataname", headerName: "dataname", width: 130},
+         
+          // Add other columns here based on your requirements
+          {
+            field: "action",
+            headerName: "Action",
+            width: 130,
+            renderCell: (params) => (
+              <strong>
+                <DeleteIcon onClick={() => handleDelete(params.row)}>
+                  Delete
+                </DeleteIcon>
+                <EditIcon onClick={() => handleEdit(params.row)} />
+              </strong>
+            ),
+          },
+        ]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              page: 0,
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+    </div>
+  )}
+</CustomTabPanel>
+
               </>
             }
           </Box>

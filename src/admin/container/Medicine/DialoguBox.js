@@ -16,6 +16,7 @@ export default function DialoguBox() {
 
   const [mdata, setMdata] = useState([]);
   const [editing, setEditing] = useState(false);
+  console.log(editing);
   const dispatch=useDispatch()
   const medidata= useSelector((state)=>state.medicines);
 
@@ -39,6 +40,8 @@ export default function DialoguBox() {
           dispatch(addmedicineData(data));
         }
       }  
+
+
       setEditing(false);
     }
  
