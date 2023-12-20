@@ -27,7 +27,7 @@ export const addApt = createAsyncThunk("appoinment/add", async data => {
   console.log(data);
   const number = Math.floor(Math.random() * 10000);
 
-  let aptdata = { ...data };
+  let aptdata = {...data};
 
   const storageRef = ref(storage, "apt/" + number + "_" + data.pres.name);
 
@@ -35,7 +35,8 @@ export const addApt = createAsyncThunk("appoinment/add", async data => {
   // 'file' comes from the Blob or File API
   await uploadBytes(storageRef, data.pres)
     .then(async snapshot => {
-      await getDownloadURL(ref(storage, snapshot.ref)).then(async url => {
+      await getDownloadURL(ref(storage, snapshot.ref))
+      .then(async url => {
         console.log(url);
 
         const aptdoc = await addDoc(collection(db, "apt"), {
@@ -45,6 +46,9 @@ export const addApt = createAsyncThunk("appoinment/add", async data => {
         });
 
         console.log(aptdoc);
+
+
+        // Id Mukava Mate Aa Create Karvu Padyu.
 
         aptdata = {
           id: aptdoc.id,
@@ -61,25 +65,16 @@ export const addApt = createAsyncThunk("appoinment/add", async data => {
   return aptdata;
 });
 
-export const addAppoinmentData = createAsyncThunk(
-  "appoinment/post",
-  async data => {
-    console.log(data);
-
-    const docRef = await addDoc(collection(db, "appoinemnts"), data);
-
-    console.log("Document written with ID: ", docRef.id);
-  }
-);
-
 export const getAppoinmentData = createAsyncThunk(
   "appoinment/get",
   async () => {
     const data = [];
 
     const querySnapshot = await getDocs(collection(db, "apt"));
+    console.log(querySnapshot);
     querySnapshot.forEach(doc => {
-      data.push({ id: doc.id, ...doc.data() });
+      console.log(doc);
+      data.push({id: doc.id, ...doc.data()});
     });
 
     console.log(data);
@@ -97,7 +92,7 @@ export const deleteAppoinmentData = createAsyncThunk(
     deleteObject(desertRef)
       .then(async () => {
         console.log("File Deleted Succesfully");
-        await deleteDoc(doc(db, "apt/", data.id));
+        await deleteDoc(doc(db, "apt/",data.id));
       })
       .catch(error => {
         // Uh-oh, an error occurred!
@@ -112,7 +107,7 @@ export const editAppoinmentData = createAsyncThunk(
   async data => {
     console.log(data);
 
-    let aptdata = { ...data };
+    let aptdata = {...data};
 
     if (typeof data.pres === "string") {
       const aptRef = doc(db, "apt", data.id);
@@ -173,12 +168,19 @@ export const appoinmentSlice = createSlice({
   initialState,
   reducers: {},
 
+
   extraReducers: builder => {
-    // builder.addCase(addAppoinmentData.fulfilled, (state, action) => {
-    //   state.isLaoding = false;
-    //   state.error = null;
-    //   state.appoinment = action.payload;
-    // });
+    
+    builder.addCase(addApt.fulfilled, (state, action) => {
+      state.isLaoding = false;
+      state.error = null;
+      if (Array.isArray(state.appoinment)) {
+        state.appoinment = state.appoinment.concat(action.payload);
+      } else {
+        state.appoinment = [action.payload]; // If not an array, create a new array with the payload
+      }
+    });
+
     builder.addCase(getAppoinmentData.fulfilled, (state, action) => {
       console.log(action.payload);
       state.isLaoding = false;
@@ -192,26 +194,17 @@ export const appoinmentSlice = createSlice({
       state.appoinment = state.appoinment.filter(v => v.id !== action.payload);
     });
     builder.addCase(editAppoinmentData.fulfilled, (state, action) => {
-      console.log(action.payload);
+      console.log(action.payload , state.appoinment);
       state.isLaoding = false;
       state.error = null;
       state.appoinment = state.appoinment.map(v => {
+        console.log(v);
         if (v.id === action.payload.id) {
           return action.payload;
         } else {
           return v;
         }
       });
-    });
-
-    builder.addCase(addApt.fulfilled, (state, action) => {
-      state.isLaoding = false;
-      state.error = null;
-      if (Array.isArray(state.appoinment)) {
-        state.appoinment = state.appoinment.concat(action.payload);
-      } else {
-        state.appoinment = [action.payload]; // If not an array, create a new array with the payload
-      }
     });
   }
 });

@@ -264,7 +264,7 @@ function Auth(props) {
                 </a>
               </p>}
 
-        {type === "signUp"
+        {type === "signUp" 
           ? ""
           : type === "login"
             ? <p className="text-center">

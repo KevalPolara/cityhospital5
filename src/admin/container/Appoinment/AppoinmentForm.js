@@ -28,7 +28,6 @@ export default function AppoinmentForm() {
   const handleFormSubmit=(data)=>{  
     console.log(data);
 
-    dispatch(addAppoinmentData(data));
 
     // if(editing){
     //   dispatch(updatemedicineData(data))

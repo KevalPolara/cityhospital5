@@ -1,5 +1,7 @@
+import { addDoc, collection } from "firebase/firestore"
 import {  deleteDoctorData, getDoctor, postDoctorData, updateDoctorData } from "../../common/api/doctor.api"
-import { ADD_DOCTOR, DELETE_DOCTOR, DELETE_MEDICINE, ERROR_DOCTOR, GET_DOCTOR, UPDATE_DOCTOR } from "../ActionTypes"
+import { ADD_DOCTOR, ADD_MEDICINE, DELETE_DOCTOR, DELETE_MEDICINE, ERROR_DOCTOR, GET_DOCTOR, UPDATE_DOCTOR } from "../ActionTypes"
+import { db } from "../../firebase/firebase"
 
 
 export const getDoctorData=()=>(dispatch)=>{
@@ -11,10 +13,15 @@ export const getDoctorData=()=>(dispatch)=>{
     }
 }
 
-export const addDoctorData=(data)=>(dispatch)=>{
+export const addDoctorData=(data)=>async(dispatch)=>{
     try{
-        postDoctorData(data)
-        .then((response)=>dispatch({type:ADD_DOCTOR,payload:response.data}))
+
+        const docRef = await addDoc(collection(db, "doctor"), data);
+        console.log("Document written with ID: ", docRef.id);
+        dispatch({ type: ADD_MEDICINE, payload: { ...data, id: docRef.id}});
+    
+        // postDoctorData(data)
+        // .then((response)=>dispatch({type:ADD_DOCTOR,payload:response.data}))
     }catch(errors){
         console.log(errors);
     }

@@ -24,6 +24,8 @@ import Wishlist from '../container/Wishlist/Wishlist';
 import ThemeContext from '../context/theme.context';
 import AppoinmentList from '../container/Appointement/AppoinmentList';
 import Tab from '../container/Tab/Tab';
+import Checkout from '../container/Checkout/Checkout';
+import UseRef from '../container/UseRef/UseRef';
 
 
 
@@ -46,13 +48,19 @@ function UserRoute(props) {
         <Route path="/about" element={<About />} />
         <Route path="/counter" element={<Counter />} />
         <Route path="/contact/" element={<Contact />}/>
+
+
         <Route element={<Privateroute/>}>
-        <Route path="/appointement" element={<Appointement />} />
+        <Route path="/appointement" element={<Appointement/>} />
         <Route path="/appointementlist" element={<AppoinmentList/>} />
         <Route path="/tab" element={<Tab/>} />
         <Route path="/dept/:id" element={<Dept/>}/>
         </Route>
+
+        
         <Route path="/auth" element={<Auth />} />        
+        <Route path="/checkout" element={<Checkout/>} />        
+        <Route path="/useref" element={<UseRef/>} />      
         <Route path="/cart" element={<Cart />} />        
         <Route path="/wishlist" element={<Wishlist/>} />        
 

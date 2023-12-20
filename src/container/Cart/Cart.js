@@ -6,6 +6,7 @@ import {
   incrementCart
 } from "../../redux/slice/cart.slice";
 import { idID } from "@mui/material/locale";
+import { Link } from "react-router-dom";
 
 function Cart(props) {
   const cart = useSelector((state) => state.cart);
@@ -126,7 +127,8 @@ function Cart(props) {
                 <div className="col">TOTAL PRICE </div>
                 <div className="col text-right">₹{ansCart}</div>
               </div>
-              <button className="checkoutbtn">CHECKOUT</button>
+              <Link to="/checkout"><button className="checkoutbtn">CHECKOUT</button></Link>
+
             </div>
           </div>
         </div>

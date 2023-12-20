@@ -41,8 +41,6 @@ function Wishlist(props) {
                   <tr>
                     <th width="45%" className="pname">Product Name</th>
                     <th width="15%">Unit Price</th>
-                    <th width="15%">Stock Status</th>
-                    <th width="15%">Add to Cart </th>
                     <th width="10%" className="action">Action</th>
                   </tr>
                 </thead>
@@ -60,21 +58,14 @@ function Wishlist(props) {
                                 className="mCS_img_loaded"
                               /> */}
                             </div>
+                            <div className="name-product" style={{ fontSize: '20px' ,color: '#FF6337' }}>{v.name}</div>
 
-                            <div className="name-product">{v.name}</div>
                           </div>
                         </td>
                         <td width="15%" className="price">
                           ₹{v.price}
                         </td>
-                        <td width="15%">
-                          <span className="in-stock-box">In Stock</span>
-                        </td>
-                        <td width="15%">
-                          <button className="round-black-btn small-btn">
-                            Add to Cart
-                          </button>
-                        </td>
+                        
                         <td width="10%" className="text-center">
                           <a href="#" className="trash-icon">
                             <i className="far fa-trash-alt" onClick={()=>handleDelete(v.id)} />

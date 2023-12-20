@@ -191,7 +191,6 @@ function Appointement(props) {
       console.log(values);
       //
 
-
       if(editing == true){
         console.log("keval Polara");
         dispatch(editAppoinmentData(values));
@@ -202,8 +201,6 @@ function Appointement(props) {
 
       setEditing(false);
       setValue(1);
-
-
 
       action.resetForm();
       let arr = values.message.split(" ");  

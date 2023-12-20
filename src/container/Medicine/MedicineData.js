@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addToCart } from "../../redux/slice/cart.slice";
 import { addWishlist, colourWishlist, colurWishlist } from "../../redux/action/wishlist.action";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { getmedicine } from "../../redux/slice/medicine.slice";
 
 function MedicineData({ increment,  SetFav }) {
@@ -19,14 +21,17 @@ function MedicineData({ increment,  SetFav }) {
   console.log(input);
   const [sort, SetSort] = useState("");
   const [search, finalData] = useState([]);
+  const medidata = useSelector(state => state.medicines)
+  console.log(medidata.medicine);
+
+
   const { id } = useParams();
   const [favourite, SetFavourite] = useState(false);
   const dispatch = useDispatch();
-  const medidata = useSelector(state => state.medicines);
-  console.log(medidata.medicine);
+  
   const cart= useSelector(state => state.cart);
   const fav=useSelector(state=>state.fav);
-  console.log(cart);
+  
 
   useEffect(() => {
     dispatch(getmedicine());
@@ -45,37 +50,36 @@ function MedicineData({ increment,  SetFav }) {
     dispatch(addWishlist(id))
   };
 
- const handlecolourFav=(event,id) =>{
-  event.preventDefault();
- }
-
 
   const handleSortSearch = () => {
-    // let fdata = medidata.medicine.filter(v => {
-     
-    //   return (
-    //     v.name.toLowerCase().includes(input.toLowerCase()) ||
-    //     v.price.toString().includes(input.toString())
-    //   );
-    // });
+ let fData = medidata.medicine.filter(v => {
+
+      return (
+        v.name.toLowerCase().includes(input.toLowerCase()) ||
+        v.price.toString().includes(input.toString())
+      );
+    });
 
 
-    // fdata = medidata.medicine.sort((a, b) => {
-    //   if (sort === "az") {
-    //     return a.name.localeCompare(b.name);
-    //   } else if (sort === "za") {
-    //     return b.name.localeCompare(a.name);
-    //   } else if (sort === "lh") {
-    //     return a.price - b.price;
-    //   } else if (sort === "hl") {
-    //     return b.price - a.price;
-    //   }
-    // });
 
-    // return fdata;
+   fData =  medidata.medicine.sort((a, b) => {
+      if (sort === "az") {
+        return a.name.localeCompare(b.name);
+      } else if (sort === "za") {
+        return b.name.localeCompare(a.name);
+      } else if (sort === "lh") {
+        return a.price - b.price;
+      } else if (sort === "hl") {
+        return b.price - a.price;
+      }
+    });
+
+    return fData;
   };
 
-  let finaldata = handleSortSearch();
+
+const fData= handleSortSearch();
+console.log(handleSortSearch());
 
   return (
     <div className="container">
@@ -137,8 +141,8 @@ function MedicineData({ increment,  SetFav }) {
                       onHandleCart={event=> handleAddCart(event,v.id)}
                       favButVal="btn"
                       onHandleFav={event => handleFavIncre(event, v.id)}
-                      // favourite={fav.fav.includes(v.id) ? true : false}
-                      favourite={event=>handlecolourFav(event,v.id)}
+                      favourite={fav.fav.includes(v.id) ?  true : false}
+                      id={v.id}
                     />
                   </Link>
                 </div>

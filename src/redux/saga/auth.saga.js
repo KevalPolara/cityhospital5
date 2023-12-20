@@ -24,6 +24,8 @@ function* SignUpUser(action) {
 function* loginUser(action){
   try{
     const user = yield call(loginApi, action.payload.data);
+    console.log(action.payload);
+
     yield put(loginResponse(user.user))
     yield put(setAlert({text : user.message , color : 'success'}));
     action.payload.callback("/");

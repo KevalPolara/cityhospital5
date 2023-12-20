@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -19,7 +19,9 @@ function Header({counter, fav}) {
   console.log(cartone); 
   const label = { inputProps: {'Switch demo' : 'aria-label'} };
   const favone=useSelector(state=>state.fav);
+  const [open ,setOpen] = useState(false);
   const theme = useContext(ThemeContext);
+  console.log(theme);
   const {state,dispatch} = useContext(LanguageContext);
   const language = useContext(LanguageContext);
   const auth = useSelector(state => state.auth);
@@ -33,6 +35,10 @@ function Header({counter, fav}) {
     console.log(selectedLanguage);
 
     dispatch({type : LANGUAGE , payload : selectedLanguage})
+  }
+
+  const handleOpen = () =>{
+    setOpen(true);
   }
 
   // console.log(theme);
@@ -55,7 +61,12 @@ function Header({counter, fav}) {
             <i className="bi bi-envelope" />{" "}
             <a href="mailto:contact@example.com">{language.language === 'english' ? 'cityhospital@example.com' : 'hello'}</a>
             <i className="bi bi-phone" /> +91 9988776655
+
+          <Switch {...label} defaultUnchecked onClick={()=> theme.toggleTheme(theme.theme)} />
+
           </div>
+
+
           <div className="d-none d-lg-flex social-links align-items-center">
             <a href="#" className="twitter">
               <i className="bi bi-twitter" />
@@ -184,11 +195,10 @@ function Header({counter, fav}) {
                 </NavLink>
               </li>
 
-          <Switch {...label} defaultUnchecked onClick={()=> theme.toggleTheme(theme.theme)} />
 
               {/* <li><NavLink to={"/appointement"} className="nav-link scrollto" activeClassName="active" href="./pages/contact.html"></NavLink></li> */}
             </ul>
-            <i className="bi bi-list mobile-nav-toggle" />
+            <i className="bi bi-list mobile-nav-toggle" onClick={handleOpen}/>
           </nav>
           <NavLink
             to={"/appointement"}

@@ -4,11 +4,10 @@ const initialState={
     isLoading : false,
     medicine : [],
     errors : null
-
 }
 
 export const medicineDatareducer=(state=initialState,action)=>{
-    // console.log(action);    
+    console.log(action);    
 
     switch(action.type){
 
